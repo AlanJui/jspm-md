@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-COMPATIBLE" content="IE=edgue">
+  <meta name="description" content="">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <title>Angular Material -- Starter App</title>
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700">
+
+  <style type="text/css">
+    [ng-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body ng-cloak layout="column">
+
+  <div>
+    <md-toolbar>
+      <h2>
+        Toolbar with Standard Buttons
+      </h2>
+    </md-toolbar>
+  </div>
+
+  <script src="./jspm_packages/system.js"></script>
+  <script src="./config.js"></script>
+  <script>
+    System
+      .import('./js/boot')
+      .catch(console.error.bind(console));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "name": "jspm-md-01",
+  "version": "1.0.0",
+  "description": "練習使用 TypeScript + JSPM 開發 AngularJS 1.x + Angular Material 的 App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browser-sync start --files 'client/index.html, client/**/*.tpl.html, client/config.js, client/js/**/*.js, client/assets/app.css' --server './client'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jspm": "^0.16.32",
+    "karma": "^0.13.22",
+    "protractor": "^3.2.2"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "client"
+    },
+    "dependencies": {
+      "angular": "github:angular/bower-angular@^1.5.3",
+      "angular-material": "github:angular/bower-material@^1.0.7",
+      "css": "github:systemjs/plugin-css@^0.1.20",
+      "json": "github:systemjs/plugin-json@^0.1.0",
+      "text": "github:systemjs/plugin-text@^0.0.7"
+    },
+    "devDependencies": {
+      "typescript": "npm:typescript@^1.6.2"
+    }
+  },
+  "dependencies": {
+    "browser-sync": "^2.11.2"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "system",
+    "outDir": "../js/",
+    "target": "es5",
+    "sourceMap": true,
+    "watch": true,
+    "noImplicitAny": false,
+    "removeComments": true
+  },
+  "exclude": [
+    "/node_modules",
+    "/client/jspm_packages",
+    "/typings",
+    "/_tmp",
+    "/client/src/_all.d.ts",
+    "/client/js"
+  ]
+}
