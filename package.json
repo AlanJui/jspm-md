@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc --project client/src",
     "start": "browser-sync start --files 'client/index.html, client/**/*.tpl.html, client/config.js, client/js/**/*.js, client/assets/app.css' --server './client'"
   },
   "keywords": [],
