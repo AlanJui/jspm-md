@@ -13,18 +13,43 @@
     [ng-cloak] {
       display: none;
     }
+
+    .red {
+      background-color: red;
+    }
+
+    .sideNav {
+      background-color: lightskyblue;
+    }
+
+    #content {
+      background: lightgreen;
+    }
   </style>
 </head>
-<body ng-cloak layout="column"
+<body ng-cloak
+      layout="column"
       ng-controller="MainController as vm">
 
-  <div>
-    <md-toolbar>
-      <h2>
-        Toolbar with Standard Buttons
-      </h2>
-    </md-toolbar>
+  <!-- Tool Bar -->
+  <md-toolbar>
+    <h2>
+      Toolbar with Standard Buttons
+    </h2>
+  </md-toolbar>
+
+  <div class="container" layout="row" flex>
+    <!-- SideNav -->
+    <md-sidenav class="sideNav" md-is-locked-open="true">
+      Sidenav
+    </md-sidenav>
+
+    <!-- Main Content -->
+    <md-content id="content" flex>
+      Content
+    </md-content>
   </div>
+
 
   <script src="./jspm_packages/system.js"></script>
   <script src="./config.js"></script>
