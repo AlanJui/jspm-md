@@ -1,37 +1,35 @@
-///<reference path="../_client.d.ts"/>
-
-import '../common/services/user.service';
-
-import User from '../domain/User';
+import {IContactService} from '../common/services/contact.service';
+import {Contact} from '../domain/Contact';
 
 class MainController {
-  users = [];
-  selectedUser: User = null;
+  contacts = [];
+  selectedContact: Contact = null;
 
   static $inject = [
-    'UserService',
+    'ContactService',
     '$mdSidenav',
     '$mdToast',
     '$mdDialog',
     '$mdMedia',
     '$mdBottomSheet'
   ];
+  
   constructor(
-    private UserService: common.IUserService,
-    private $mdSidenav: angular.material.ISidenavService,
-    private $mdToast: angular.material.IToastService,
-    private $mdDialog: angular.material.IDialogService,
-    private $mdMedia: angular.material.IMedia,
-    private $mdBottomSheet: angular.material.IBottomSheetService
+    public contactService: IContactService,
+    public $mdSidenav: angular.material.ISidenavService,
+    public $mdToast: angular.material.IToastService,
+    public $mdDialog: angular.material.IDialogService,
+    public $mdMedia: angular.material.IMedia,
+    public $mdBottomSheet: angular.material.IBottomSheetService
   ) {
     let self = this;
-
-    this.UserService.loadAllUsers()
-      .then((users: User[]) => {
-        console.log(users);
-        self.users = users;
-        self.selectedUser = self.users[0];
-        self.UserService.selectedUser = self.selectedUser;
+    
+    this.contactService.getAll()
+      .then((contacts: Contact[]) => {
+        console.log(contacts);
+        self.contacts = contacts;
+        self.selectedContact = self.contacts[0];
+        self.contactService.selectedContact = self.selectedContact;
       });
   }
 
@@ -39,6 +37,14 @@ class MainController {
     this.$mdSidenav('left').toggle();
   }
 
+  selectContact(contact: Contact) {
+    this.selectedContact = contact;
+  }
+
+  getFullName(contact: Contact): string {
+    return `${contact.firstName} ${contact.lastName}`;
+  }
+  
 }
 
 export default MainController;

@@ -14,17 +14,17 @@
       display: none;
     }
 
-    .red {
-      background-color: red;
-    }
+    /*.red {*/
+      /*background-color: red;*/
+    /*}*/
 
-    .sideNav {
-      background-color: lightskyblue;
-    }
+    /*.sideNav {*/
+      /*background-color: lightskyblue;*/
+    /*}*/
 
-    #content {
-      background: lightgreen;
-    }
+    /*#content {*/
+      /*background: lightgreen;*/
+    /*}*/
   </style>
 </head>
 <body ng-cloak
@@ -40,13 +40,26 @@
 
   <div class="container" layout="row" flex>
     <!-- SideNav -->
-    <md-sidenav class="sideNav" md-is-locked-open="true">
-      Sidenav
+    <md-sidenav class="md-whiteframe-4dp"
+                md-is-locked-open="true">
+      <md-list>
+        <md-list-item ng-repeat="contact in vm.contacts">
+          <md-button aria-label="Select a contact"
+                     ng-click="vm.selectContact(contact)">
+            <md-icon md-svg-src="{{contact.avatar}}"
+                     class="avatar"></md-icon>
+            {{vm.getFullName(contact)}}
+          </md-button>
+        </md-list-item>
+      </md-list>
     </md-sidenav>
 
     <!-- Main Content -->
     <md-content id="content" flex>
-      Content
+      <md-icon md-svg-src="assets/svg/avatar-1.svg"
+               class="avatar"></md-icon>
+      <h2>Thomas Burleson</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam magnam numquam sunt vel. Animi earum iste molestias omnis quas quisquam voluptatem. At consectetur culpa cumque expedita non quis voluptatibus.</p>
     </md-content>
   </div>
 

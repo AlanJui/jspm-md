@@ -1,23 +1,30 @@
-import Note from './Note';
-import Contact from './Contact';
+import Person from './Person';
 
-class User {
+class User extends  Person {
+  avatar: string;
+  email: string;
 
   constructor(
-    public name: string,
-    public avatar: string,
-    public bio: string,
-    public notes: Note[]
-  ) {}
+    firstName: string,
+    lastName: string,
+    avatar?: string,
+    email?: string
+  ) {
+    super(firstName, lastName);
 
-  static createContact(contact: Contact): User {
-    return new User(
-      `${contact.firstName} ${contact.lastName}`,
-      contact.avatar,
-      contact.bio,
-      []
-    );
+    if (!avatar) {
+      this.avatar = null;
+    } else {
+      this.avatar = avatar;
+    }
+
+    if (!email) {
+      this.email = null;
+    } else {
+      this.email = email;
+    }
   }
+
 }
 
 export default User;

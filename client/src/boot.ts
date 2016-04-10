@@ -27,7 +27,7 @@ let app = angular
 
     let app = angular
       .module(appName, [
-        'common.services',
+        'common',
         'main',
         'ngMaterial',
         'ngMdIcons'
