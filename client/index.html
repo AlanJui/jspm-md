@@ -32,16 +32,24 @@
       ng-controller="MainController as vm">
 
   <!-- Tool Bar -->
-  <md-toolbar>
-    <h2>
-      Toolbar with Standard Buttons
-    </h2>
+  <md-toolbar layout="row">
+    <md-button class="menu"
+               hide-gt-sm
+               ng-click="vm.toggleSideNav()">
+      <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
+    <h1>
+      Angular Material Starter
+    </h1>
   </md-toolbar>
 
+  <!-- Main Panel -->
   <div class="container" layout="row" flex>
-    <!-- SideNav -->
+
+    <!-- SideNav Panel -->
     <md-sidenav class="md-whiteframe-4dp"
-                md-is-locked-open="true">
+                md-component-id="sideNav"
+                md-is-locked-open="$mdMedia('gt-sm')">
       <md-list>
         <md-list-item ng-repeat="contact in vm.contacts">
           <md-button aria-label="Select a contact"
@@ -54,13 +62,21 @@
       </md-list>
     </md-sidenav>
 
-    <!-- Main Content -->
+    <!-- Content Panel -->
     <md-content id="content" flex>
-      <md-icon md-svg-src="assets/svg/avatar-1.svg"
+      <md-icon md-svg-src="{{vm.selectedContact.avatar}}"
                class="avatar"></md-icon>
-      <h2>Thomas Burleson</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum ipsam magnam numquam sunt vel. Animi earum iste molestias omnis quas quisquam voluptatem. At consectetur culpa cumque expedita non quis voluptatibus.</p>
+      <h2>{{vm.getFullName(vm.selectedContact)}}</h2>
+      <p>
+        {{vm.selectedContact.bio}}
+      </p>
+
+      <md-button class="share" md-no-ink aria-label="Make a contact"
+                 ng-click="vm.makeContact($event)">
+        <md-icon md-svg-icon="share"></md-icon>
+      </md-button>
     </md-content>
+
   </div>
 
 

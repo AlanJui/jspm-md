@@ -1,5 +1,6 @@
 import {IContactService} from '../common/services/contact.service';
 import {Contact} from '../domain/Contact';
+import ContactPanelController from './contactPanel.controller';
 
 class MainController {
   contacts = [];
@@ -34,15 +35,36 @@ class MainController {
   }
 
   toggleSideNav(): void {
-    this.$mdSidenav('left').toggle();
+    this.$mdSidenav('sideNav').toggle();
   }
 
   selectContact(contact: Contact) {
+    console.log(`Click on ${JSON.stringify(contact)}`);
     this.selectedContact = contact;
+    this.contactService.selectedContact = contact;
+
+    this.toggleSideNav();
   }
 
   getFullName(contact: Contact): string {
     return `${contact.firstName} ${contact.lastName}`;
+  }
+  
+  makeContact($event): void {
+    
+    this.$mdBottomSheet.show({
+      parent: angular.element(document.getElementById('content')),
+      templateUrl: './views/contactPanel.tpl.html',
+      controller: ContactPanelController,
+      controllerAs: 'vm',
+      bindToController: true,
+      targetEvent: $event
+    })
+      .then((clickedItem) => {
+        if (clickedItem) {
+          console.log(`${clickedItem.name} is clicked!`);
+        }
+      });
   }
   
 }
