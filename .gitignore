@@ -1,9 +1,0 @@
-.idea/
-node_modules/
-npm-debug.log
-client/jspm_packages/
-client/js/
-typings/
-_tmp/
-
-
