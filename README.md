@@ -68,6 +68,35 @@ $ typings install
 由於 Browser-Sync 俱備 Live Reload 功能，且已設定啟動 wtach 功能，
 所以，對於 HTML / CSS / TypeScript 檔案的編輯動作，可立即自瀏覽器觀察其輸出結果。
 
+# 產品包裝作業
+
+將已完成發展，產出的「工作產品」，進行軟體包裝，並置於目錄路徑: **_build**
+之中。
+
+```
+ $ gulp build
+```
+
+# 檢視產品
+
+```
+ $ gulp build:serve
+```
+
+# 佈署作業
+
+將已完成包裝的「軟體產品」，佈署至 GitHub 。
+
+```
+ $ gulp deploy
+```
+
+完成佈署之後，可至下列網址操作使用:
+
+(http://alanjui.github.io/jspm-md)[http://alanjui.github.io/jspm-md]
+
+
+
 # 參考資訊
 
 ## 使用 jspm 安裝軟體所需模組

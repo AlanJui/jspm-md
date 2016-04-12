@@ -18,9 +18,10 @@ const URL_AVATAR_ICONS = './assets/svg/avatars.svg';
 const URL_ICON_MENU = './assets/svg/menu.svg';
 const URL_ICON_SHARE = './assets/svg/share.svg';
 
+export function bootstrap() {
+
 let app = angular
   .element(document)
-
   .ready(() => {
     let appName = 'app';
     let body = document.getElementsByTagName('body')[0];
@@ -48,10 +49,11 @@ let app = angular
           .icon('phone', './assets/svg/phone.svg', 512)
           .icon('google_plus', './assets/svg/google_plus.svg', 512)
           .icon('hangouts', './assets/svg/hangouts.svg', 512)
-          .icon('twitter', './assets/svg/twitter.svg', 512)
-      }])
-      ;
+          .icon('twitter', './assets/svg/twitter.svg', 512);
+      }]);
 
     angular.bootstrap(body, [app.name], {strictDi: false});
   });
+
+}
 
