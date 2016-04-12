@@ -46,13 +46,15 @@ $ typings install
 
 依循下述「操作程序」，進行 Web App 發展作業。
 
-## 1. 啟動 tsc 
+## 1. 啟動 TypeScript 自動編譯功能 
 
 ```
  $ npm run dev
 ```
 
-## 2. 啟動 Web App
+## 2. 瀏覽 Web App 
+
+透過以下指令，啟動 Browser-Sync 瀏覽發展中的 Web App 。
 
 ```
  $ npm start
@@ -93,7 +95,7 @@ $ typings install
 
 完成佈署之後，可至下列網址操作使用:
 
-(http://alanjui.github.io/jspm-md)[http://alanjui.github.io/jspm-md]
+[http://alanjui.github.io/jspm-md](http://alanjui.github.io/jspm-md)
 
 
 
