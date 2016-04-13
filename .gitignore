@@ -7,7 +7,10 @@ typings/
 _tmp/
 _build/
 .publish/
+db/
 client/views/
 client/assets/app.css
-
+server/**/*.js*
+server/app.js.map
+server/db.js*
 

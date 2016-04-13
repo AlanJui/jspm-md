@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc --project client/src",
     "bundle": "jspm bundle-sfx js/main.js _build/bundle.js",
+    "db": "mongod --dbpath ./db",
     "dev": "tsc --watch --project client/src",
     "start": "gulp",
     "serve:dev": "browser-sync start --files 'client/index.html, client/**/*.tpl.html, client/config.js, client/js/**/*.js, client/assets/app.css' --server './client'",
@@ -71,6 +72,10 @@
     }
   },
   "dependencies": {
-    "express": "^4.13.4"
+    "body-parser": "^1.15.0",
+    "errorhandler": "^1.4.3",
+    "express": "^4.13.4",
+    "method-override": "^2.3.5",
+    "mongodb": "^2.1.16"
   }
 }
