@@ -10,7 +10,8 @@ gulp.task('serve',
     'browser-sync'
   ],
   function () {
-    gulp.watch('client/**/*.js').on('change', reload);
+    gulp.watch('client/src/**/*.ts', ['tsc']);
+    gulp.watch('client/js/**/*.js').on('change', reload);
     gulp.watch('client/assets/app.css').on('change', reload);
     gulp.watch('client/src/**/*.less', ['less']);
     gulp.watch('client/src/**/*.tpl.html', ['copyViewTemplates']);
