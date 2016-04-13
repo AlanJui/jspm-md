@@ -16,21 +16,34 @@ var gulp = require('gulp'),
 
 gulp.task('less', function () {
 
-  return gulp.src(['client/style.less'])
+  return gulp.src(['client/src/app.less'])
     .pipe(
-      inject(gulp.src(['**/*.less', '!jspm_packages{,/**}'], {
-        read: false,
-        cwd: 'client'
-      }), {
-        starttag: '/* inject:less-imports */',
-        endtag: '/* endinject */',
-        transform: function (filepath) {
-          return '@import ".' + filepath + '";';
+      inject(
+        gulp.src(
+          [
+            '**/*.less',
+            '!jspm_packages{,/**}'
+          ],
+          {
+            read: false,
+            cwd: 'client/src'
+          }
+        ),
+        {
+          starttag: '/* inject:less-imports */',
+          endtag: '/* endinject */',
+          transform: function (filepath) {
+            return '@import ".' + filepath + '";';
         }
       })
     )
-    .pipe(less({
-      plugins: [less_autoprefix, less_clean_css]
-    }))
-    .pipe(gulp.dest('client'));
+    .pipe(
+      less({
+        plugins: [
+          less_autoprefix,
+          less_clean_css
+        ]
+      })
+    )
+    .pipe(gulp.dest('client/assets'));
 });

@@ -7,4 +7,7 @@ typings/
 _tmp/
 _build/
 .publish/
+client/views/
+client/assets/app.css
+
 

@@ -11,8 +11,11 @@ gulp.task('serve',
   ],
   function () {
     gulp.watch('client/**/*.js').on('change', reload);
-    gulp.watch('**/*.css').on('change', reload);
-    gulp.watch('**/*.tpl.html').on('change', reload);
+    gulp.watch('client/assets/app.css').on('change', reload);
+    gulp.watch('client/src/**/*.less', ['less']);
+    gulp.watch('client/src/**/*.tpl.html', ['copyViewTemplates']);
+    gulp.watch('client/views/*.tpl.html').on('change', reload);
+    gulp.watch('client/index.html').on('change', reload);
   }
 );
 
@@ -30,7 +33,10 @@ gulp.task('browser-sync',
 );
 
 gulp.task('nodemon',
-  [],
+  [
+    'copyViewTemplates',
+    'less'
+  ],
   function (done) {
     var running = false;
 

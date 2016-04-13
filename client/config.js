@@ -6,35 +6,6 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-  bundles: {
-    "build.js": [
-      "js/main.js",
-      "js/boot.js",
-      "js/common/services/common.services.js",
-      "github:angular/bower-angular-animate@1.5.3.js",
-      "github:angular/bower-angular-aria@1.5.3.js",
-      "github:angular/bower-material@1.0.7.js",
-      "js/main/main.module.js",
-      "npm:angular-material-icons@0.7.0.js",
-      "js/common/services/contact.service.js",
-      "github:angular/bower-angular@1.5.3.js",
-      "github:angular/bower-material@1.0.7/angular-material.css!github:systemjs/plugin-css@0.1.20.js",
-      "npm:angular-material-icons@0.7.0/angular-material-icons.css!github:systemjs/plugin-css@0.1.20.js",
-      "assets/app.css!github:systemjs/plugin-css@0.1.20.js",
-      "github:angular/bower-angular-messages@1.5.3.js",
-      "github:angular/bower-angular-resource@1.5.3.js",
-      "github:angular/bower-angular-aria@1.5.3/angular-aria.js",
-      "github:angular/bower-angular-animate@1.5.3/angular-animate.js",
-      "js/main/main.controller.js",
-      "npm:angular-material-icons@0.7.0/index.js",
-      "github:angular/bower-material@1.0.7/angular-material.js",
-      "github:angular/bower-angular-messages@1.5.3/angular-messages.js",
-      "js/main/contactPanel.controller.js",
-      "github:angular/bower-angular-resource@1.5.3/angular-resource.js",
-      "github:angular/bower-angular@1.5.3/angular.js",
-      "npm:angular-material-icons@0.7.0/angular-material-icons.js"
-    ]
-  },
 
   map: {
     "angular": "github:angular/bower-angular@1.5.3",

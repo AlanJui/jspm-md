@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="myApp">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-COMPATIBLE" content="IE=edgue">
@@ -9,22 +9,13 @@
   <title>Angular Material -- Starter App</title>
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700">
 
+  <!-- build:css -->
+  <!-- endbuild -->
+
   <style type="text/css">
     [ng-cloak] {
       display: none;
     }
-
-    /*.red {*/
-      /*background-color: red;*/
-    /*}*/
-
-    /*.sideNav {*/
-      /*background-color: lightskyblue;*/
-    /*}*/
-
-    /*#content {*/
-      /*background: lightgreen;*/
-    /*}*/
   </style>
 </head>
 <body ng-cloak
@@ -79,7 +70,7 @@
 
   </div>
 
-
+  <!-- build:js -->
   <script src="jspm_packages/system.js"></script>
   <script src="config.js"></script>
   <script>
@@ -87,6 +78,7 @@
       .import('js/main.js')
       .catch(console.error.bind(console));
   </script>
+  <!-- endbuild -->
 
 </body>
 </html>

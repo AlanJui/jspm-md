@@ -54,7 +54,7 @@ class MainController {
     
     this.$mdBottomSheet.show({
       parent: angular.element(document.getElementById('content')),
-      templateUrl: './views/contactPanel.tpl.html',
+      templateUrl: './views/main/contactPanel.tpl.html',
       controller: ContactPanelController,
       controllerAs: 'vm',
       bindToController: true,

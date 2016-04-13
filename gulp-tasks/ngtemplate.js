@@ -11,7 +11,7 @@ var gulp = require('gulp'),
   };
 
 gulp.task('ngtemplate', function() {
-  return gulp.src(['client/**/*.tpl.html', '!client/jspm_packages{,/**}'])
+  return gulp.src(['client/src/**/*.tpl.html', '!client/jspm_packages{,/**}'])
     .pipe(htmlMin(htmlMin_options))
     .pipe(ngTemplate({
       moduleName: 'HTMLTemplates',
