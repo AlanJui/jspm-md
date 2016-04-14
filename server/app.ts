@@ -37,9 +37,12 @@ server.get('/api/users/nameList', (req, res) => {
   let users = db.users();
   users.find({}).toArray((err, docs) => {
     if (err) res.sendStatus(400);
+    // console.log(`docs = ${JSON.stringify(docs)}\n\n`);
 
-    console.log(`docs = ${JSON.stringify(docs)}`);
-    let nameList = docs.map((user) => { user.name });
+    let nameList = docs.map((user) => {
+      // console.log(`user = ${JSON.stringify(user)}\n\n`);
+      return `${user.first_name} ${user.last_name}`
+    });
     res.json(nameList);
   });
 
