@@ -11,6 +11,7 @@ db/
 client/views/
 client/assets/app.css
 server/**/*.js*
-server/app.js.map
-server/db.js*
-
+models/*.js*
+routes/*.js*
+app.js*
+db.js*

@@ -1,4 +1,4 @@
-///<reference path="../typings/mongodb.d.ts"/>
+///<reference path="../typings/main.d.ts"/>
 
 import * as mongodb from 'mongodb';
 import IUser from './models/User';
@@ -24,13 +24,12 @@ export function getUser(id: string, callback: (user: IUser) => void) {
 export function getUsers(callback: (users: IUser[]) => void) {
   db.collection('users', (error, usersCollection) => {
     if (error) { console.error(error); return; }
-    
     usersCollection
       .find({}, { '_id': 1 })
-      .toArray((error, userobjs) => {
+      .toArray((error, userObjs) => {
         if (error) { console.error(error); return; }
-
-        callback(userobjs);
+        // console.log(`usersCollection: ${userObjs.toString()}`);
+        callback(userObjs);
       });
   });
 }

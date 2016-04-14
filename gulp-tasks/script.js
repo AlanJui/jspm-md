@@ -8,10 +8,9 @@ gulp.task('tsc:client', function() {
       target: 'es5',
       sourceMap: true,
       noImplicitAny: false,
-      removeComments: true,
-      noEmitOnError: true
+      emitError: false,
+      removeComments: true
     }))
-    .pipe(tsc({emitError: false}))
     .pipe(gulp.dest('./client/js/'));
 });
 
@@ -21,9 +20,10 @@ gulp.task('tsc:server', function() {
       module: 'commonjs',
       target: 'es5',
       sourceMap: true,
-      noEmitOnError: true
+      noImplicitAny: false,
+      emitError: false,
+      removeComments: true
     }))
-    .pipe(tsc({emitError: false}))
     .pipe(gulp.dest('./'));
 });
 
