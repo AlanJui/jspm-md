@@ -1,132 +1,28 @@
 ///<reference path="../typings/main.d.ts"/>
 
 import * as mongodb from 'mongodb';
-import IUser from './models/User';
-import IImage from './models/Image';
-import IBoard from './models/Board';
 
-let server = new mongodb.Server('localhost', 27017, {auto_reconnect: true});
-let db = new mongodb.Db('mydb', server, { w: 1 });
-db.open(function() {});
+class DbUtil {
+  static client = mongodb.MongoClient;
+  static _db: mongodb.Db;
 
-export function getUser(id: string, callback: (user: IUser) => void) {
-  db.collection('users', (error, users) => {
-    if (error) { console.error(error); return; }
-
-    users.findOne({_id: id}, (error, user) => {
-      if (error) { console.error(error); return; }
-
-      callback(user);
-    });
-  });
-}
-
-export function getUsers(callback: (users: IUser[]) => void) {
-  db.collection('users', (error, usersCollection) => {
-    if (error) { console.error(error); return; }
-    usersCollection
-      .find({}, { '_id': 1 })
-      .toArray((error, userObjs) => {
-        if (error) { console.error(error); return; }
-        // console.log(`usersCollection: ${userObjs.toString()}`);
-        callback(userObjs);
-      });
-  });
-}
-
-export function getImage(imageId: string, callback: (image: IImage) => void) {
-  db.collection('images', (error, imagesCollection) => {
-    if (error) { console.error(error); return; }
-
-    imagesCollection
-      .findOne({_id: new mongodb.ObjectID(imageId)}, (error, image) => {
-        if (error) { console.error(error); return; }
-        callback(image);
-      });
-  });
-}
-
-export function getImages(imageIds: mongodb.ObjectID[], callback: (images: IImage[]) => void) {
-  db.collection('images', function(error, imagesCollection) {
-    if (error) { console.error(error); return; }
-
-    imagesCollection
-      .findOne({_id: {$in: imageIds}})
-      .toArray((error, images) => {
-        callback(images);
-      });
-  });
-}
-
-export function addBoard(
-  userid: any, 
-  title: string, 
-  description: string, 
-  callback: (user: IUser) => void
-) {
-  
-  db.collection('users', (error, users) => {
-    if (error) { console.error(error); return; }
-
-    users.update(
-      {_id: userid},
-      {
-        '$push': {
-          boards: {
-            title: title,
-            description: description,
-            images: []
-          }
-        }
-      },
-      (error, user) => {
-        if (error) { console.error(error); return; }
-        callback(user);
+  static connect(): void {
+    this.client.connect('mongodb://localhost:27017/mydb', (err, db) => {
+      if (err) {
+        console.error("Error connecting to MongoDB server - check mongod has been started");
+        process.exit(1);
       }
-    );
-  });
-}
 
-export function addPin(
-  userid: string, 
-  boardid: string, 
-  imageUri: string, 
-  link: string, 
-  caption: string, 
-  callback: (user: IUser) => void
-) {
-  
-  db.collection('images', (error, imagesCollection) => {
-    if (error) { console.error(error); return; }
-
-    imagesCollection.insert(
-      {
-        user: userid,
-        caption: caption,
-        imageUri: imageUri,
-        link: link,
-        board: boardid,
-        comments: []
-      }, 
-      (error, image) => {
-        console.log(image);
-        db.collection('users', (error, users) => {
-          if (error) { console.error(error); return; }
-          users.update(
-            {
-              _id: userid, 
-              'boards.title': boardid
-            },
-            {
-              '$push': {
-                'boards.$.images': image[0]._id
-              }
-            },
-            (error, user) => {
-              callback(user);
-            }
-          );
-        });
+      this._db = db;
+      console.log('MongoDB Server connected');
     });
-  });
+  }
+
+  static users(): mongodb.Collection {
+    return this._db.collection('users');
+  }
+
 }
+
+export default DbUtil;
+

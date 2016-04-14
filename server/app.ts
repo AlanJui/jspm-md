@@ -6,22 +6,24 @@ import * as errorHandler from 'errorhandler';
 import * as methodOverride from 'method-override';
 
 import * as routes from './routes/index';
-import * as db from './db';
+import db from './db';
 
 import IUser from './models/User';
 
+// Configuration
+let jsonParser = bodyParser.json();
 let port = 20080;
 let server = express();
+db.connect();
 
-// Configuration
+// setup index.html from client/
+server.use(express.static(`${__dirname}/../client`));
 
-// server.set('views', __dirname + '/views');
-// server.set('view engine', 'jade');
-// server.set('view options', { layout: false });
+// setup HTTP body parser
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
+
 server.use(methodOverride());
-server.use(express.static(__dirname + '/../client'));
 
 let env = process.env.NODE_ENV  || 'development';
 if (env === 'development') {
@@ -30,22 +32,27 @@ if (env === 'development') {
 
 // Routes
 
-// server.get('/', routes.index);
+server.get('/api/users/nameList', (req, res) => {
+  
+  let users = db.users();
+  users.find({}).toArray((err, docs) => {
+    if (err) res.sendStatus(400);
 
-server.get('/api/users', (req, res) => {
-  db.getUsers((users: IUser[]) => {
-    res.json(users);
+    console.log(`docs = ${JSON.stringify(docs)}`);
+    let nameList = docs.map((user) => { user.name });
+    res.json(nameList);
   });
+
 });
 
-server.get('/api/users/:userID', (req, res) => {
-  console.log(`getting user ${req.params.userID}`);
+// server.get('/api/users/:userID', (req, res) => {
+//   console.log(`getting user ${req.params.userID}`);
+//
+//   db.getUser(req.params.userID, (user: IUser) => {
+//     res.json(user);
+//   });
+// });
 
-  db.getUser(req.params.userID, (user: IUser) => {
-    res.json(user);
-  });
-});
-
-server.listen(port, function () {
+server.listen(port, () => {
   console.log(`Express server listening on porg ${port} in ${server.settings.env} mode`);
 });

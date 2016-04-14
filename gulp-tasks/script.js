@@ -24,7 +24,7 @@ gulp.task('tsc:server', function() {
       emitError: false,
       removeComments: true
     }))
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest('./server'));
 });
 
 gulp.task('tsc', ['tsc:server', 'tsc:client']);
