@@ -1,15 +1,16 @@
-///<reference path="../typings/main.d.ts"/>
+///<reference path="../typings/mongodb.d.ts"/>
 
 import * as mongodb from 'mongodb';
 import IUser from './models/User';
+import IImage from './models/Image';
+import IBoard from './models/Board';
 
-let server = new mongodb
-  .Server('localhost', 27017, {auto_reconnect: true});
+let server = new mongodb.Server('localhost', 27017, {auto_reconnect: true});
 let db = new mongodb.Db('mydb', server, { w: 1 });
-db.open();
+db.open(function() {});
 
 export function getUser(id: string, callback: (user: IUser) => void) {
-  db.collection('users', function(error, users) {
+  db.collection('users', (error, users) => {
     if (error) { console.error(error); return; }
 
     users.findOne({_id: id}, (error, user) => {
@@ -25,8 +26,7 @@ export function getUsers(callback: (users: IUser[]) => void) {
     if (error) { console.error(error); return; }
     
     usersCollection
-      // .find({}, { '_id': 1 })
-      .find()
+      .find({}, { '_id': 1 })
       .toArray((error, userobjs) => {
         if (error) { console.error(error); return; }
 
@@ -35,11 +35,11 @@ export function getUsers(callback: (users: IUser[]) => void) {
   });
 }
 
-export function getImage(imageId: string, callback: (image: Image) => void) {
-  db.collection('images', (error, images_collection) => {
+export function getImage(imageId: string, callback: (image: IImage) => void) {
+  db.collection('images', (error, imagesCollection) => {
     if (error) { console.error(error); return; }
 
-    images_collection
+    imagesCollection
       .findOne({_id: new mongodb.ObjectID(imageId)}, (error, image) => {
         if (error) { console.error(error); return; }
         callback(image);
@@ -47,12 +47,12 @@ export function getImage(imageId: string, callback: (image: Image) => void) {
   });
 }
 
-export function getImages(imageIds: mongodb.ObjectID[], callback: (images: Image[]) => void) {
-  db.collection('images', function(error, images_collection) {
+export function getImages(imageIds: mongodb.ObjectID[], callback: (images: IImage[]) => void) {
+  db.collection('images', function(error, imagesCollection) {
     if (error) { console.error(error); return; }
 
-    images_collection
-      .find({_id: {$in: imageIds}})
+    imagesCollection
+      .findOne({_id: {$in: imageIds}})
       .toArray((error, images) => {
         callback(images);
       });
@@ -97,10 +97,10 @@ export function addPin(
   callback: (user: IUser) => void
 ) {
   
-  db.collection('images', (error, images_collection) => {
+  db.collection('images', (error, imagesCollection) => {
     if (error) { console.error(error); return; }
 
-    images_collection.insert(
+    imagesCollection.insert(
       {
         user: userid,
         caption: caption,

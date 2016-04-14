@@ -1,5 +1,3 @@
-///<reference path="_client.d.ts"/>
-
 import 'angular-material/angular-material.css!';
 import 'angular-material-icons/angular-material-icons.css!';
 import 'assets/app.css!';

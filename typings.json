@@ -4,13 +4,14 @@
     "angular-material": "registry:dt/angular-material#1.0.0-rc5.0+20160317120654",
     "body-parser": "registry:dt/body-parser#0.0.0+20160317120654",
     "errorhandler": "registry:dt/errorhandler#0.0.0+20160316155526",
+    "es6-promise": "registry:dt/es6-promise#0.0.0+20160317120654",
     "express": "registry:dt/express#4.0.0+20160317120654",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160322035842",
     "jquery": "registry:dt/jquery#1.10.0+20160316155526",
     "method-override": "registry:dt/method-override#0.0.0+20160317120654",
-    "mongodb": "registry:dt/mongodb#2.1.0+20160328151449",
-    "node": "registry:dt/node#4.0.0+20160412142033"
+    "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "node": "registry:dt/node#4.0.0+20160412142033",
+    "serve-static": "registry:dt/serve-static#1.7.1+20160104095738"
   },
-  "dependencies": {
-    "mongodb": "registry:npm/mongodb#2.1.0+20160329101818"
-  }
+  "dependencies": {}
 }

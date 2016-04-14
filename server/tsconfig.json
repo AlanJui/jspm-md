@@ -1,11 +1,24 @@
 {
+  "compileOnSave": true,
+
   "compilerOptions": {
+    "target": "es5",
     "module": "commonjs",
-    "sourceMap": true
+    "declaration": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "removeComments": true
   },
+
+  "filesGlob": [
+    "./**/*.ts",
+    "../typings/**/*.d.ts",
+    "!../node_modules/**/*.ts"
+  ],
+
   "files": [
-    "./routes/index.ts",
-    "./db.ts",
-    "./app.ts"
+    "app.ts",
+    "db.ts",
+    "../typings/main.d.ts"
   ]
 }

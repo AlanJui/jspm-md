@@ -1,5 +1,7 @@
 ///<reference path="../../typings/main.d.ts"/>
 
+import * as mongodb from 'mongodb';
+
 interface IImage {
   _id: mongodb.ObjectID;
   user: string;
