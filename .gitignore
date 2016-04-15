@@ -10,5 +10,7 @@ client/jspm_packages/
 client/js/
 client/views/
 client/assets/app.css
-server/**/*.js*
-server/*.js*
+server/**/*.js
+server/**/*.js.map
+server/*.js
+server/*.js.map

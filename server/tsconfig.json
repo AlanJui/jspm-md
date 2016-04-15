@@ -19,6 +19,9 @@
   "files": [
     "app.ts",
     "db.ts",
+    "routes.ts",
+    "config/express.ts",
+    "api/user/index.ts",
     "../typings/main.d.ts"
   ]
 }

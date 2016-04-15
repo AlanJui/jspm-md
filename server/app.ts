@@ -1,61 +1,36 @@
 ///<reference path="../typings/main.d.ts"/>
+///<reference path="./db.ts"/>
+
+
+'use strict';
 
 import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as errorHandler from 'errorhandler';
-import * as methodOverride from 'method-override';
 
-import * as routes from './routes/index';
-import db from './db';
+import setupExpress from './config/express';
+import setupRouter from './routes';
 
 import IUser from './models/User';
 
-// Configuration
-let jsonParser = bodyParser.json();
-let port = 20080;
-let server = express();
+// Connect to MongoDB Server
+let db = require('./db');
 db.connect();
 
-// setup index.html from client/
-server.use(express.static(`${__dirname}/../client`));
+// Setup server
+let app = express();
+let port = 20080;
 
-// setup HTTP body parser
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-
-server.use(methodOverride());
-
-let env = process.env.NODE_ENV  || 'development';
-if (env === 'development') {
-  server.use(errorHandler());
-}
+// Setup express
+// require('./config/express').default(app);
+setupExpress(app);
 
 // Routes
+// require('./routes').default(app, db);
+setupRouter(app, db);
 
-server.get('/api/users/nameList', (req, res) => {
-  
-  let users = db.users();
-  users.find({}).toArray((err, docs) => {
-    if (err) res.sendStatus(400);
-    // console.log(`docs = ${JSON.stringify(docs)}\n\n`);
-
-    let nameList = docs.map((user) => {
-      // console.log(`user = ${JSON.stringify(user)}\n\n`);
-      return `${user.first_name} ${user.last_name}`
-    });
-    res.json(nameList);
-  });
-
+// Start server
+app.listen(port, () => {
+  console.log(`Express server listening on porg ${port} in ${app.settings.env} mode`);
 });
 
-// server.get('/api/users/:userID', (req, res) => {
-//   console.log(`getting user ${req.params.userID}`);
-//
-//   db.getUser(req.params.userID, (user: IUser) => {
-//     res.json(user);
-//   });
-// });
-
-server.listen(port, () => {
-  console.log(`Express server listening on porg ${port} in ${server.settings.env} mode`);
-});
+// Expose app
+exports = module.exports = app;
