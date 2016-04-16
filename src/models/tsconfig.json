@@ -1,0 +1,13 @@
+{
+  "compileOnSave": true,
+
+  "compilerOptions": {
+    "outDir": ".",
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "removeComments": true
+  }
+}

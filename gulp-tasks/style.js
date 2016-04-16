@@ -16,7 +16,7 @@ var gulp = require('gulp'),
 
 gulp.task('less', function () {
 
-  return gulp.src(['client/src/app.less'])
+  return gulp.src(['src/client/app.less'])
     .pipe(
       inject(
         gulp.src(
@@ -26,7 +26,7 @@ gulp.task('less', function () {
           ],
           {
             read: false,
-            cwd: 'client/src'
+            cwd: 'src/client'
           }
         ),
         {

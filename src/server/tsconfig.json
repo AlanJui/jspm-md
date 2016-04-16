@@ -2,7 +2,7 @@
   "compileOnSave": true,
 
   "compilerOptions": {
-    "outDir": ".",
+    "outDir": "../../server/",
     "target": "es5",
     "module": "commonjs",
     "declaration": false,
@@ -22,7 +22,9 @@
     "db.ts",
     "routes.ts",
     "config/express.ts",
+    "config/seed.ts",
     "api/user/index.ts",
-    "../typings/main.d.ts"
+    "models/Person.ts",
+    "models/User.ts"
   ]
 }

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "../js",
+    "outDir": "../../client/js",
     "target": "es5",
     "module": "system",
     "sourceMap": true,
@@ -13,6 +13,6 @@
     "!./node_modules/**/*.ts"
   ],
   "files": [
-    "main.ts"
+    "boot.ts"
   ]
 }

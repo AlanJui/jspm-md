@@ -10,13 +10,13 @@ gulp.task('serve',
     'browser-sync'
   ],
   function () {
-    gulp.watch('client/src/**/*.ts', ['tsc:client']);
+    gulp.watch('src/client/**/*.ts', ['tsc:client']);
     gulp.watch('client/js/**/*.js').on('change', reload);
-    gulp.watch('server/**/*.ts', ['tsc:server']);
+    gulp.watch('src/server/**/*.ts', ['tsc:server']);
     gulp.watch('server/**/*.js').on('change', reload);
     gulp.watch('client/assets/app.css').on('change', reload);
-    gulp.watch('client/src/**/*.less', ['less']);
-    gulp.watch('client/src/**/*.tpl.html', ['copyViewTemplates']);
+    gulp.watch('src/client/**/*.less', ['less']);
+    gulp.watch('src/client/**/*.tpl.html', ['copyViewTemplates']);
     gulp.watch('client/views/*.tpl.html').on('change', reload);
     gulp.watch('client/index.html').on('change', reload);
   }

@@ -14,10 +14,10 @@ var browserSync = require('browser-sync').create();
 // clean out all files and folders from build folder
 gulp.task('build:clean', function (cb) {
   del([
-    './_build/assets',
-    './_build/views',
-    './_build/main.bundle.js',
-    './_build/index.html'
+    '_build/assets',
+    '_build/views',
+    '_build/main.bundle.js',
+    '_build/index.html'
   ])
     .then(function () {
       cb();
@@ -35,13 +35,13 @@ gulp.task('build:copy', function (callback) {
 });
 
 gulp.task('build:views', function () {
-  return gulp.src(['./client/views/**/*.tpl.html'])
-    .pipe(gulp.dest('./_build/views'));
+  return gulp.src(['src/client/**/*.tpl.html'])
+    .pipe(gulp.dest('_build/views'));
 });
 
 gulp.task('build:assets', function () {
-  return gulp.src(['./client/assets/**/*'])
-    .pipe(gulp.dest('./_build/assets'));
+  return gulp.src(['client/assets/**/*'])
+    .pipe(gulp.dest('_build/assets'));
 });
 
 //////////////////////////////////////////////////////
@@ -49,11 +49,11 @@ gulp.task('build:assets', function () {
 //////////////////////////////////////////////////////
 
 gulp.task('bundleJS', function () {
-  return gulp.src('./client/js/main.js')
+  return gulp.src('client/js/boot.js')
     .pipe(gulp_jspm({
       selfExecutingBundle: true
     }))
-    .pipe(gulp.dest('./_build/'));
+    .pipe(gulp.dest('_build/'));
 });
 
 //////////////////////////////////////////////////////
@@ -61,11 +61,11 @@ gulp.task('bundleJS', function () {
 //////////////////////////////////////////////////////
 
 gulp.task('build:inject', function () {
-  return gulp.src('./client/index.html')
+  return gulp.src('client/index.html')
     .pipe(htmlReplace({
       'js': 'main.bundle.js'
     }))
-    .pipe(gulp.dest('./_build/'));
+    .pipe(gulp.dest('_build/'));
 });
 
 //////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ gulp.task('build:inject', function () {
 
 gulp.task('build:serve', function () {
   browserSync.init({
-    server: './_build'
+    server: '_build'
   });
 });
 
