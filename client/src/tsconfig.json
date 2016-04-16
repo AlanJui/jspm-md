@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "system",
     "outDir": "../js",
     "target": "es5",
+    "module": "system",
     "sourceMap": true,
     "noImplicitAny": false,
     "removeComments": true

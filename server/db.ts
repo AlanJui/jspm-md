@@ -1,32 +1,43 @@
 ///<reference path="../typings/main.d.ts"/>
 
-'use strict';
-
 import * as mongodb from 'mongodb';
 
-let _db: mongodb.Db;
-let client = mongodb.MongoClient;
+interface IDbUtil {
+  connectDbServer(): void;
+  getCollection(name: string): mongodb.Collection;
+}
 
-module.exports = {
+class DbUtil implements IDbUtil {
+  _db: mongodb.Db;
+  client = mongodb.MongoClient;
 
-  connect(): void {
-    client.connect('mongodb://localhost:27017/mydb', (err, db) => {
+  connectDbServer(): void {
+
+    this.client.connect('mongodb://localhost:27017/mydb', (err, db) => {
       if (err) {
         console.error("Error connecting to MongoDB server - check mongod has been started");
         process.exit(1);
       }
-      _db = db;
+      this._db = db;
       console.log('MongoDB Server connected');
-    })
-  },
+    });
 
-  getCollection(name): mongodb.Collection {
-    return _db.collection(name);
+  }
+
+  getCollection(name: string): mongodb.Collection {
+    return this._db.collection(name);
   }
 
 }
 
+export default DbUtil;
 
+// ====================================================================
+
+// 寫法二: 用 TypeScript ; 配合編譯成 CommonJS Module 的寫法
+//
+/////<reference path="../typings/main.d.ts"/>
+//
 // import * as mongodb from 'mongodb';
 //
 // class DbUtil {
@@ -52,4 +63,34 @@ module.exports = {
 // }
 //
 // export default DbUtil;
+
+// ====================================================================
+
+// 寫法一: 最符合 NodeJS 所採用的 CommonJS Module 架構，但以 ES2015 語法的寫法;
+//
+/////<reference path="../typings/main.d.ts"/>
+// import * as mongodb from 'mongodb';
+//
+// 'use strict';
+//
+// let _db: mongodb.Db;
+// let client = mongodb.MongoClient;
+// module.exports = {
+//
+//   connect(): void {
+//     client.connect('mongodb://localhost:27017/mydb', (err, db) => {
+//       if (err) {
+//         console.error("Error connecting to MongoDB server - check mongod has been started");
+//         process.exit(1);
+//       }
+//       _db = db;
+//       console.log('MongoDB Server connected');
+//     })
+//   },
+//
+//   getCollection(name): mongodb.Collection {
+//     return _db.collection(name);
+//   }
+//
+// }
 

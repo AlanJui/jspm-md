@@ -1,19 +1,16 @@
 ///<reference path="../typings/main.d.ts"/>
-///<reference path="./db.ts"/>
-
 
 'use strict';
 
 import * as express from 'express';
 
+import DbUtil from './db';
 import setupExpress from './config/express';
 import setupRouter from './routes';
 
-import IUser from './models/User';
-
 // Connect to MongoDB Server
-let db = require('./db');
-db.connect();
+let db = new DbUtil();
+db.connectDbServer();
 
 // Setup server
 let app = express();
