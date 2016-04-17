@@ -14,7 +14,7 @@ var gulp = require('gulp'),
     advanced: true
   });
 
-gulp.task('less', function () {
+gulp.task('build:styles', function () {
 
   return gulp.src(['src/client/app.less'])
     .pipe(
@@ -40,10 +40,45 @@ gulp.task('less', function () {
     .pipe(
       less({
         plugins: [
+          less_autoprefix
+        ]
+      })
+    )
+    .pipe(gulp.dest('_build/client'));
+});
+
+
+gulp.task('build:styles-compress', function () {
+
+  return gulp.src(['src/client/app.less'])
+    .pipe(
+      inject(
+        gulp.src(
+          [
+            '**/*.less',
+            '!jspm_packages{,/**}'
+          ],
+          {
+            read: false,
+            cwd: 'src/client'
+          }
+        ),
+        {
+          starttag: '/* inject:less-imports */',
+          endtag: '/* endinject */',
+          transform: function (filepath) {
+            return '@import ".' + filepath + '";';
+          }
+        })
+    )
+    .pipe(
+      less({
+        plugins: [
           less_autoprefix,
           less_clean_css
         ]
       })
     )
-    .pipe(gulp.dest('client/assets'));
+    .pipe(gulp.dest('_build/client'));
+
 });

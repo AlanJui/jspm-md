@@ -1,4 +1,6 @@
-import {Contact} from '../domain/Contact';
+///<reference path="../_client.d.ts"/>
+
+import {Contact} from '../../../models/Contact';
 import {IContactService} from '../common/services/contact.service';
 
 class ContactPanelController {

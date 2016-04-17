@@ -4,14 +4,15 @@
   "description": "練習使用 TypeScript + JSPM 開發 AngularJS 1.x + Angular Material 的 App",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --project client/src",
-    "bundle": "jspm bundle-sfx js/main.js _build/bundle.js",
-    "db": "mongod --dbpath ./db",
-    "dev": "tsc --watch --project client/src",
-    "start": "gulp",
-    "serve:dev": "browser-sync start --files 'client/index.html, client/**/*.tpl.html, client/config.js, client/js/**/*.js, client/assets/app.css' --server './client'",
-    "serve:dist": "browser-sync start --server '_build'",
     "setup": "npm install && jspm install && typings install",
+    "db": "mongod --dbpath ./db",
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "tsc --project src/server",
+    "build:client": "tsc --project src/client/scripts",
+    "serve": "gulp serve",
+    "start": "nodemon _build/server/server.js",
+    "serve:client": "browser-sync start --server '_build/client'",
+    "bundle": "jspm bundle-sfx _build/client/scripts/boot.js _build/bundle.js",
     "test": "npm run unit-tests && npm run e2e-tests",
     "unit-tests": "karma start",
     "e2e-tests": "protractor protractor.conf.js"
@@ -52,23 +53,25 @@
   },
   "jspm": {
     "directories": {
-      "baseURL": "client"
+      "baseURL": "_build/client"
     },
     "dependencies": {
-      "angular": "github:angular/bower-angular@^1.5.3",
+      "angular": "github:angular/bower-angular@^1.5.4",
       "angular-animate": "github:angular/bower-angular-animate@^1.5.3",
       "angular-aria": "github:angular/bower-angular-aria@^1.5.3",
       "angular-material": "github:angular/bower-material@^1.0.7",
       "angular-material-icons": "npm:angular-material-icons@^0.7.0",
       "angular-messages": "github:angular/bower-angular-messages@^1.5.3",
       "angular-resource": "github:angular/bower-angular-resource@^1.5.3",
+      "angular-ui-router": "github:angular-ui/ui-router@^0.2.18",
+      "core-js": "npm:core-js@^2.2.2",
       "css": "github:systemjs/plugin-css@^0.1.20",
       "json": "github:systemjs/plugin-json@^0.1.0",
-      "text": "github:systemjs/plugin-text@^0.0.7"
+      "text": "github:systemjs/plugin-text@^0.0.7",
+      "typescript": "npm:typescript@^1.8.10"
     },
     "devDependencies": {
-      "clean-css": "npm:clean-css@^3.4.12",
-      "typescript": "npm:typescript@^1.6.2"
+      "clean-css": "npm:clean-css@^3.4.12"
     }
   },
   "dependencies": {

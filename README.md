@@ -124,13 +124,17 @@ $ npm run setup
 ## 使用 jspm 安裝軟體所需模組
 
 ```
- $ jspm install angular-material text json 
+ $ jspm install angular-material angular-ui-router text json 
+ $ jspm install typescript core-js
+ $ jspm install angular angular-animate angular-aria angular-material angular-messages angular-resource angular-ui-router 
+ $ jspm install npm:angular-material-icons 
 ```
 
 ## 使用 typings 安裝 DTS 檔案
 
 ```
  $ typings install angular-material --ambient --save
+ $ typings install angular-ui-router --ambient --save
 ```
 
 ## 人工手動模式 Web App 發展作業
@@ -161,4 +165,21 @@ $ npm run setup
 由於 Browser-Sync 俱備 Live Reload 功能，且已設定啟動 wtach 功能，
 所以，對於 HTML / CSS / TypeScript 檔案的編輯動作，可立即自瀏覽器觀察其輸出結果。
 
+# Inject LESS
 
+```
+#myApp {
+
+  html, body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* inject:less-imports */
+  /* endinject */
+
+}
+```

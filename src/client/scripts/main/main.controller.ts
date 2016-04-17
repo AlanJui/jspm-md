@@ -1,5 +1,7 @@
+///<reference path="../_client.d.ts"/>
+
 import {IContactService} from '../common/services/contact.service';
-import {Contact} from '../domain/Contact';
+import {Contact} from '../../../models/Contact';
 import ContactPanelController from './contactPanel.controller';
 
 class MainController {
@@ -8,6 +10,7 @@ class MainController {
 
   static $inject = [
     'ContactService',
+    'mainCtrlService',
     '$mdSidenav',
     '$mdToast',
     '$mdDialog',
@@ -16,7 +19,8 @@ class MainController {
   ];
   
   constructor(
-    public contactService: IContactService,
+    public ContactService: IContactService,
+    public mainCtrlService,
     public $mdSidenav: angular.material.ISidenavService,
     public $mdToast: angular.material.IToastService,
     public $mdDialog: angular.material.IDialogService,
@@ -25,13 +29,16 @@ class MainController {
   ) {
     let self = this;
     
-    this.contactService.getAll()
-      .then((contacts: Contact[]) => {
-        console.log(contacts);
-        self.contacts = contacts;
-        self.selectedContact = self.contacts[0];
-        self.contactService.selectedContact = self.selectedContact;
-      });
+    // this.ContactService.getAll()
+    //   .then((contacts: Contact[]) => {
+    //     console.log(contacts);
+    //     self.contacts = contacts;
+    //     self.selectedContact = self.contacts[0];
+    //     self.ContactService.selectedContact = self.selectedContact;
+    //   });
+    self.contacts = mainCtrlService.data;
+    self.selectedContact = self.contacts[0];
+    self.ContactService.selectedContact = self.selectedContact;
   }
 
   toggleSideNav(): void {
@@ -41,7 +48,7 @@ class MainController {
   selectContact(contact: Contact) {
     console.log(`Click on ${JSON.stringify(contact)}`);
     this.selectedContact = contact;
-    this.contactService.selectedContact = contact;
+    this.ContactService.selectedContact = contact;
 
     this.toggleSideNav();
   }
@@ -54,7 +61,7 @@ class MainController {
     
     this.$mdBottomSheet.show({
       parent: angular.element(document.getElementById('content')),
-      templateUrl: './views/main/contactPanel.tpl.html',
+      templateUrl: 'scripts/main/contactPanel.tpl.html',
       controller: ContactPanelController,
       controllerAs: 'vm',
       bindToController: true,

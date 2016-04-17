@@ -1,7 +1,7 @@
 'use strict';
 
-var gulp = require('gulp'),
-  wrench = require('wrench');
+var gulp = require('gulp');
+var wrench = require('wrench');
 
 wrench
   .readdirSyncRecursive('./gulp-tasks')

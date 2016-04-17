@@ -1,8 +1,8 @@
 var gulp = require('gulp');
 var tsc = require('gulp-tsc');
 
-gulp.task('tsc:client', function() {
-  return gulp.src('src/client/**/*.ts')
+gulp.task('build:client-withSourceMap', function() {
+  return gulp.src('src/client/scripts/**/*.ts')
     .pipe(tsc({
       module: 'system',
       target: 'es5',
@@ -11,20 +11,26 @@ gulp.task('tsc:client', function() {
       emitError: false,
       removeComments: true
     }))
-    .pipe(gulp.dest('client/js/'));
+    .pipe(gulp.dest('_build'));
 });
 
-gulp.task('tsc:server', function() {
+gulp.task('build:client', function() {
+  return gulp.src('src/client/scripts/**/*.ts')
+    .pipe(gulp.dest('_build/client/scripts'));
+});
+
+gulp.task('build:server', function() {
   return gulp.src('src/server/**/*.ts')
     .pipe(tsc({
       module: 'commonjs',
       target: 'es5',
       sourceMap: true,
+      sourceRoot: 'src/client/scripts',
       noImplicitAny: false,
       emitError: false,
       removeComments: true
     }))
-    .pipe(gulp.dest('server/'));
+    .pipe(gulp.dest('_build/server'));
 });
 
-gulp.task('tsc', ['tsc:server', 'tsc:client']);
+gulp.task('build:scripts', ['build:server', 'build:client']);

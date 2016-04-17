@@ -1,8 +1,11 @@
+///<reference path="./_client.d.ts"/>
+
 import 'angular-material/angular-material.css!';
 import 'angular-material-icons/angular-material-icons.css!';
-import 'assets/app.css!';
+// import 'app.css!';
 
 import angular from 'angular';
+import 'angular-ui-router';
 import 'angular-animate';
 import 'angular-aria';
 import 'angular-material';
@@ -28,9 +31,13 @@ let app = angular
       .module(appName, [
         'common',
         'main',
+        'ui.router',
         'ngMaterial',
         'ngMdIcons'
       ])
+      .config(($urlRouterProvider) => {
+        $urlRouterProvider.otherwise('/');
+      })
       .config(['$mdThemingProvider', ($mdThemingProvider: angular.material.IThemingProvider) => {
         $mdThemingProvider
           .theme('default')

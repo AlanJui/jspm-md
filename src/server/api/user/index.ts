@@ -8,18 +8,21 @@ export default function(db) {
   var router = express.Router();
 
   router.get('/', index);
-
-
   router.get('/nameList', getNameList);
 
   function index(req, res) {
-    // API: /api/users/nameList
-    console.log('working...');
+    // API: /api/users
+    let users = db.getCollection('users');
+    users.find({}).toArray((err, docs) => {
+      if (err) res.sendStatus(400);
+      // console.log(`docs = ${JSON.stringify(docs)}\n\n`);
+
+      res.json(docs);
+    });
   }
 
   function getNameList(req, res) {
     // API: /api/users/nameList
-
     let users = db.getCollection('users');
     users.find({}).toArray((err, docs) => {
       if (err) res.sendStatus(400);
@@ -27,7 +30,7 @@ export default function(db) {
 
       let nameList = docs.map((user) => {
         // console.log(`user = ${JSON.stringify(user)}\n\n`);
-        return `${user.first_name} ${user.last_name}`
+        return `${user.firstName} ${user.lastName}`
       });
       res.json(nameList);
     });

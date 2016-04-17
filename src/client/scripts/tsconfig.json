@@ -1,0 +1,19 @@
+{
+  "compileOnSave": true,
+
+  "compilerOptions": {
+    "outDir": "../../../_build",
+//    "outDir": "/_build",
+    "target": "es5",
+    "module": "system",
+    "sourceMap": true,
+//    "inlineSourceMap": true,
+    "sourceRoot": "../../../src",
+    "noImplicitAny": false,
+    "removeComments": true
+  },
+
+  "exclude": [
+    "./_client.d.ts"
+  ]
+}

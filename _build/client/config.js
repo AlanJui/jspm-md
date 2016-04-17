@@ -3,37 +3,50 @@ System.config({
   defaultJSExtensions: true,
   transpiler: "typescript",
   paths: {
+    "*": "scripts/*",
+    "scripts": "scripts",
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
 
+  packages: {
+    "/scripts": {
+      "defaultExtension": "ts"
+    }
+  },
+
   map: {
-    "angular": "github:angular/bower-angular@1.5.3",
+    "angular": "github:angular/bower-angular@1.5.4",
     "angular-animate": "github:angular/bower-angular-animate@1.5.3",
     "angular-aria": "github:angular/bower-angular-aria@1.5.3",
     "angular-material": "github:angular/bower-material@1.0.7",
     "angular-material-icons": "npm:angular-material-icons@0.7.0",
     "angular-messages": "github:angular/bower-angular-messages@1.5.3",
     "angular-resource": "github:angular/bower-angular-resource@1.5.3",
+    "angular-ui-router": "github:angular-ui/ui-router@0.2.18",
     "clean-css": "npm:clean-css@3.4.12",
+    "core-js": "npm:core-js@2.2.2",
     "css": "github:systemjs/plugin-css@0.1.20",
     "json": "github:systemjs/plugin-json@0.1.0",
     "text": "github:systemjs/plugin-text@0.0.7",
-    "typescript": "npm:typescript@1.8.9",
+    "typescript": "npm:typescript@1.8.10",
+    "github:angular-ui/ui-router@0.2.18": {
+      "angular": "github:angular/bower-angular@1.5.4"
+    },
     "github:angular/bower-angular-animate@1.5.3": {
-      "angular": "github:angular/bower-angular@1.5.3"
+      "angular": "github:angular/bower-angular@1.5.4"
     },
     "github:angular/bower-angular-aria@1.5.3": {
-      "angular": "github:angular/bower-angular@1.5.3"
+      "angular": "github:angular/bower-angular@1.5.4"
     },
     "github:angular/bower-angular-messages@1.5.3": {
-      "angular": "github:angular/bower-angular@1.5.3"
+      "angular": "github:angular/bower-angular@1.5.4"
     },
     "github:angular/bower-angular-resource@1.5.3": {
-      "angular": "github:angular/bower-angular@1.5.3"
+      "angular": "github:angular/bower-angular@1.5.4"
     },
     "github:angular/bower-material@1.0.7": {
-      "angular": "github:angular/bower-angular@1.5.3",
+      "angular": "github:angular/bower-angular@1.5.4",
       "angular-animate": "github:angular/bower-angular-animate@1.5.3",
       "angular-aria": "github:angular/bower-angular-aria@1.5.3",
       "css": "github:systemjs/plugin-css@0.1.20"
@@ -117,6 +130,12 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:core-js@2.2.2": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
     "npm:core-util-is@1.0.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
@@ -141,7 +160,7 @@ System.config({
     "npm:punycode@1.3.2": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
-    "npm:readable-stream@1.1.13": {
+    "npm:readable-stream@1.1.14": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "core-util-is": "npm:core-util-is@1.0.2",
       "events": "github:jspm/nodelibs-events@0.1.1",
@@ -158,12 +177,12 @@ System.config({
     "npm:stream-browserify@1.0.0": {
       "events": "github:jspm/nodelibs-events@0.1.1",
       "inherits": "npm:inherits@2.0.1",
-      "readable-stream": "npm:readable-stream@1.1.13"
+      "readable-stream": "npm:readable-stream@1.1.14"
     },
     "npm:string_decoder@0.10.31": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
     },
-    "npm:typescript@1.8.9": {
+    "npm:typescript@1.8.10": {
       "os": "github:jspm/nodelibs-os@0.1.0"
     },
     "npm:url@0.10.3": {

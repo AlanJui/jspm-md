@@ -1,52 +1,56 @@
 'use strict';
 
-var browserSync = require('browser-sync').create(),
-  gulp = require('gulp'),
-  nodemon = require('gulp-nodemon'),
-  reload = browserSync.reload;
+var runSequence = require('run-sequence');
+var browserSync = require('browser-sync').create();
+var gulp = require('gulp');
+var nodemon = require('gulp-nodemon');
+var reload = browserSync.reload;
 
 gulp.task('serve',
   [
-    'browser-sync'
+    'build'
   ],
   function () {
-    gulp.watch('src/client/**/*.ts', ['tsc:client']);
-    gulp.watch('client/js/**/*.js').on('change', reload);
-    gulp.watch('src/server/**/*.ts', ['tsc:server']);
-    gulp.watch('server/**/*.js').on('change', reload);
-    gulp.watch('client/assets/app.css').on('change', reload);
-    gulp.watch('src/client/**/*.less', ['less']);
-    gulp.watch('src/client/**/*.tpl.html', ['copyViewTemplates']);
-    gulp.watch('client/views/*.tpl.html').on('change', reload);
-    gulp.watch('client/index.html').on('change', reload);
+    gulp.watch('src/client/scripts/**/*.ts', ['build:client']);
+    gulp.watch('_build/client/scripts/**/*.js').on('change', reload);
+
+    gulp.watch('src/server/**/*.ts', ['build:server']);
+    gulp.watch('_build/server/**/*.js').on('change', reload);
+
+    gulp.watch('src/client/scripts/**/*.less', ['build:styles']);
+    gulp.watch('src/client/app.less', ['build:styles']);
+    gulp.watch('_build/client/app.css').on('change', reload);
+
+    gulp.watch('src/client/scripts/**/*.tpl.html', ['build:views']);
+    gulp.watch('_build/client/scripts/**/*.tpl.html').on('change', reload);
+
+    gulp.watch('src/client/index.html', ['build:homePage']);
+    gulp.watch('src/client/config.js', ['build:main']);
+    gulp.watch('_build/client/index.html').on('change', reload);
   }
 );
 
-gulp.task('browser-sync',
-  [
-    'nodemon'
-  ],
-  function() {
-    browserSync.init(null, {
-      proxy: 'http://localhost:20080',
-      browser: 'google-chrome',
-      port: 10080
-    });
-  }
-);
+gulp.task('start', function (done) {
+  runSequence(
+    'start-client',
+    'start-server',
+    done);
+});
 
-gulp.task('nodemon',
-  [
-    'copyViewTemplates',
-    'tsc',
-    'less'
-  ],
-  function (done) {
+gulp.task('start:client', function() {
+  return browserSync.init(null, {
+    proxy: 'http://localhost:20080',
+    browser: 'google-chrome',
+    port: 10080
+  });
+});
+
+gulp.task('start:server', function (done) {
     var running = false;
 
     return nodemon({
-      script: 'server/app.js',
-      watch: ['server/**/*.*']
+      script: '_build/server/server.js',
+      watch: ['src/server/**/*.ts']
     })
       .on('start', function () {
         if (!running) {
