@@ -14,6 +14,10 @@ var gulp = require('gulp'),
     advanced: true
   });
 
+//////////////////////////////////////////////////////
+// BUILD
+//////////////////////////////////////////////////////
+
 gulp.task('build:styles', function () {
 
   return gulp.src(['src/client/app.less'])
@@ -47,8 +51,11 @@ gulp.task('build:styles', function () {
     .pipe(gulp.dest('_build/client'));
 });
 
+//////////////////////////////////////////////////////
+// DIST
+//////////////////////////////////////////////////////
 
-gulp.task('build:styles-compress', function () {
+gulp.task('dist:styles', function () {
 
   return gulp.src(['src/client/app.less'])
     .pipe(
@@ -79,6 +86,6 @@ gulp.task('build:styles-compress', function () {
         ]
       })
     )
-    .pipe(gulp.dest('_build/client'));
+    .pipe(gulp.dest('_dist/client'));
 
 });

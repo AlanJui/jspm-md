@@ -1,6 +1,6 @@
 ///<reference path="../../_client.d.ts"/>
 
-import {IContact, Contact} from '../../../../models/Contact';
+import {IContact, Contact} from '../../models/Contact';
 
 interface IContactService {
   selectedContact: Contact;

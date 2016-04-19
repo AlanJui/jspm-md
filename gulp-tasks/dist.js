@@ -2,20 +2,27 @@
 
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
-var gulp_jspm = require('gulp-jspm');
 var htmlReplace = require('gulp-html-replace');
-var browserSync = require('browser-sync').create();
+var del = require('del');
 
 //////////////////////////////////////////////////////
-// Bundle JS Files to a Single File
+// Copy Tasks
 //////////////////////////////////////////////////////
 
-gulp.task('dist:js', function () {
-  return gulp.src('client/js/boot.js')
-    .pipe(gulp_jspm({
-      selfExecutingBundle: true
-    }))
-    .pipe(gulp.dest('_build/'));
+// clean out all files and folders from build folder
+gulp.task('dist:clean', function (done) {
+  del('_dist/*')
+    .then(function () { done(); });
+});
+
+gulp.task('dist:views', function () {
+  return gulp.src(['src/client/scripts/**/*.tpl.html'])
+    .pipe(gulp.dest('_dist/client/scripts'));
+});
+
+gulp.task('dist:assets', function () {
+  return gulp.src(['src/client/assets/**/*'])
+    .pipe(gulp.dest('_dist/client/assets'));
 });
 
 //////////////////////////////////////////////////////
@@ -23,28 +30,29 @@ gulp.task('dist:js', function () {
 //////////////////////////////////////////////////////
 
 gulp.task('dist:inject', function () {
-  return gulp.src('client/index.html')
+  return gulp.src('src/client/index.html')
     .pipe(htmlReplace({
-      'js': 'main.bundle.js'
+      'js': 'scripts/bundle.js'
     }))
-    .pipe(gulp.dest('_build/'));
+    .pipe(gulp.dest('_dist/client'));
 });
 
 //////////////////////////////////////////////////////
 // Dist Build Tasks
 //////////////////////////////////////////////////////
 
-gulp.task('dist:serve', function () {
-  browserSync.init({
-    server: '_build'
-  });
-});
-
-
-gulp.task('dist', function (callback) {
+gulp.task('dist', function (done) {
   runSequence(
-    ['build:copy', 'dist:js'],
+    'dist:clean',
+    [
+      'dist:styles',
+      'dist:assets',
+      'dist:views'
+    ],
+    'dist:server',
+    'dist:bundle',
     'dist:inject',
-    'dist:serve',
-    callback);
+    'dist:start',
+    done
+  );
 });

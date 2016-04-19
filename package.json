@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm install && jspm install && typings install",
-    "db": "mongod --dbpath ./db",
+    "db": "mongod --dbpath ./data/db",
     "build": "npm run build:server && npm run build:client",
     "build:server": "tsc --project src/server",
     "build:client": "tsc --project src/client/scripts",
     "serve": "gulp serve",
     "start": "nodemon _build/server/server.js",
     "serve:client": "browser-sync start --server '_build/client'",
-    "bundle": "jspm bundle-sfx _build/client/scripts/boot.js _build/bundle.js",
+    "serve:dist": "PORT=3000 node _dist/server/server.js",
+    "bundle": "jspm bundle-sfx boot.js _dist/client/scripts/bundle.js",
     "test": "npm run unit-tests && npm run e2e-tests",
     "unit-tests": "karma start",
     "e2e-tests": "protractor protractor.conf.js"

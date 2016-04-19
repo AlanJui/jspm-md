@@ -51,20 +51,61 @@ $ npm run setup
 
 ## 1. 啟動「自動化」發展作業模式 
 
+### 1.1 啟動 MongoDB Server
+
+在終端機輸入下列指令:
+
 ```
+ $ npm run db 
+```
+
+### 1.2 啟動「自動編譯」功能 
+ 
+在終端機輸入下列指令:
+ 
+``` 
  $ gulp
 ```
 
 ## 2. 瀏覽 Web App 
 
-自瀏覽器，網址: **http://localhost:10080** 處，
-觀察 Web App 的輸出結果。
+### 2.1.a 啟動 Web Server
+
+無需針對程式碼除錯（Debug）時，以如下指令啟動 Web Server 。
+
+```
+ $ gulp start
+```
+
+### 2.1.b 啟動偵錯用 Web Server
+
+```
+在 WebStorm 以「Debug」指令，執行 Run Server 。
+```
+
+### 2.2 瀏覽輸出
+
+使用瀏覽器，觀看網址: **http://localhost:20080** ，觀察 Web App 的輸出結果，確認 Web App 已能正常執行。
 
 ## 3. 發展 Web App
 
+### 3.1 編輯原始程式
+
+```
 使用編輯器 (IDE/Editor) ，執行 Web App 發展工作，並自瀏覽器觀察 Web App 輸出結果。
+```
 
+### 3.2 驗證編輯
 
+```
+在執行「gulp」的終端機視窗，觀察輸出結果，確認沒有任何「編輯的錯誤」。
+```
+
+### 3.2 驗證輸出
+
+```
+自瀏覽器觀察輸出結果，確認輸出結果符合「編輯的期許」。
+```
 
 # 產品包裝作業
 
@@ -72,7 +113,7 @@ $ npm run setup
 之中。
 
 ```
- $ gulp build
+ $ gulp dist
 ```
 
 上述指令執行完畢，可自瀏覽器，網址: http://localhost:3000 處，進行軟體產品操作使用。

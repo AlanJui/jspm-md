@@ -1,7 +1,7 @@
 ///<reference path="../_client.d.ts"/>
 
+import {Contact} from '../models/Contact';
 import {IContactService} from '../common/services/contact.service';
-import {Contact} from '../../../models/Contact';
 import ContactPanelController from './contactPanel.controller';
 
 class MainController {

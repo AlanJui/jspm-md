@@ -10,7 +10,7 @@ let Seed = function (db) {
         return console.error(err);
       }
 
-      console.log('Users data for test has been created!');
+      console.log(`${err.insertedCount} users for test has been created!`);
     });
 }
 

@@ -1,13 +1,9 @@
 .idea/
+.publish/
 node_modules/
 npm-debug.log
 typings/
+data/
 _tmp/
 _build/
-.publish/
-db/
-client/jspm_packages/
-client/js/
-client/views/
-client/assets/app.css
-server/
+_dist/

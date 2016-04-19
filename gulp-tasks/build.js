@@ -12,11 +12,16 @@ var browserSync = require('browser-sync').create();
 //////////////////////////////////////////////////////
 
 // clean out all files and folders from build folder
-gulp.task('build:clean', function (cb) {
-  del('./build/*')
-    .then(function () {
-      cb();
-    });
+gulp.task('build:clean', function (done) {
+  del([
+    '_build/client/assets',
+    '_build/client/scripts',
+    '_build/client/*.css',
+    '_build/client/index.html',
+    '_build/models/*',
+    '_build/server/*'
+  ])
+    .then(function () { done(); });
 });
 
 gulp.task('build:views', function () {
@@ -37,7 +42,7 @@ gulp.task('build:homePage', function () {
     .pipe(gulp.dest('_build/client'));
 });
 
-gulp.task('build:main', ['build:homePage'], function () {
+gulp.task('build:jspm', ['build:homePage'], function () {
   return gulp.src([
     'src/client/config.js'
   ])
@@ -56,7 +61,7 @@ gulp.task('build', function (done) {
       'build:styles',
       'build:assets',
       'build:views',
-      'build:main'
+      'build:jspm'
     ],
     done
   );
