@@ -6,6 +6,24 @@ var htmlReplace = require('gulp-html-replace');
 var del = require('del');
 
 //////////////////////////////////////////////////////
+// DIST Process
+//////////////////////////////////////////////////////
+
+gulp.task('dist', function (done) {
+  runSequence(
+    'dist:clean',
+    [
+      'dist:styles',
+      'dist:assets',
+      'dist:views'
+    ],
+    'dist:scripts',
+    'dist:inject',
+    done
+  );
+});
+
+//////////////////////////////////////////////////////
 // Copy Tasks
 //////////////////////////////////////////////////////
 
@@ -30,28 +48,12 @@ gulp.task('dist:assets', function () {
 //////////////////////////////////////////////////////
 
 gulp.task('dist:inject', function () {
+
   return gulp.src('src/client/index.html')
     .pipe(htmlReplace({
       'js': 'scripts/bundle.js'
     }))
     .pipe(gulp.dest('_dist/client'));
+
 });
 
-//////////////////////////////////////////////////////
-// Dist Build Tasks
-//////////////////////////////////////////////////////
-
-gulp.task('dist', function (done) {
-  runSequence(
-    'dist:clean',
-    [
-      'dist:styles',
-      'dist:assets',
-      'dist:views'
-    ],
-    'dist:server',
-    'dist:bundle',
-    'dist:inject',
-    done
-  );
-});

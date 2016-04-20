@@ -7,9 +7,9 @@ var browserSync = require('browser-sync').create();
 var reload = browserSync.reload;
 
 var watch = function () {
-  gulp.watch('src/client/scripts/**/*.ts', ['build:client']);
+  gulp.watch('src/client/scripts/**/*.ts', ['build:clientScripts']);
 
-  gulp.watch('src/server/**/*.ts', ['build:server']);
+  gulp.watch('src/server/**/*.ts', ['build:serverScripts']);
 
   gulp.watch('src/client/scripts/**/*.less', ['build:styles']);
   gulp.watch('src/client/app.less', ['build:styles']);
@@ -17,13 +17,11 @@ var watch = function () {
   gulp.watch('src/client/scripts/**/*.tpl.html', ['build:views']);
 
   gulp.watch('src/client/index.html', ['build:homePage']);
-  gulp.watch('src/client/config.js', ['build:jspm']);
+  gulp.watch('src/client/config.js', ['build:copyConfig']);
 };
 
 var serverReload = function () {
   gulp.watch('_build/client/scripts/**/*.ts').on('change', reload);
-
-  gulp.watch('_build/server/**/*.js').on('change', reload);
 
   gulp.watch('_build/client/app.css').on('change', reload);
 
@@ -36,7 +34,7 @@ gulp.task('serve', [ 'build' ], function () {
   watch();
 });
 
-gulp.task('start', [ 'start:client' ], function () {
+gulp.task('serve:build', [ 'build', 'start:client' ], function () {
   watch();
   serverReload();
 });
@@ -50,7 +48,7 @@ gulp.task('start:client', [ 'start:server' ], function() {
 });
 
 gulp.task('start:server', [ 'build' ], function (done) {
-// gulp.task('start:server', function (done) {
+
   var running = false;
 
   return nodeMon({
@@ -68,9 +66,11 @@ gulp.task('start:server', [ 'build' ], function (done) {
         reload();
       }, 500);
     });
+
 });
 
-gulp.task('dist:start', function () {
+gulp.task('serve:dist', ['dist'], function () {
+
   nodeMon({
     script: '_dist/server/server.js',
     ext: 'js',
@@ -78,5 +78,6 @@ gulp.task('dist:start', function () {
       PORT: 3000
     }
   });
+
 });
 

@@ -3,9 +3,26 @@
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var del = require('del');
-var gulp_jspm = require('gulp-jspm');
 var htmlReplace = require('gulp-html-replace');
 var browserSync = require('browser-sync').create();
+
+//////////////////////////////////////////////////////
+// BUILD Process
+//////////////////////////////////////////////////////
+
+gulp.task('build', function (done) {
+  runSequence(
+    'build:clean',
+    [
+      'build:scripts',
+      'build:styles',
+      'build:assets',
+      'build:views',
+      'build:copyConfig'
+    ],
+    done
+  );
+});
 
 //////////////////////////////////////////////////////
 // Copy Tasks
@@ -42,27 +59,10 @@ gulp.task('build:homePage', function () {
     .pipe(gulp.dest('_build/client'));
 });
 
-gulp.task('build:jspm', ['build:homePage'], function () {
+gulp.task('build:copyConfig', ['build:homePage'], function () {
   return gulp.src([
     'src/client/config.js'
   ])
     .pipe(gulp.dest('_build/client'));
 });
 
-//////////////////////////////////////////////////////
-// BUILD
-//////////////////////////////////////////////////////
-
-gulp.task('build', function (done) {
-  runSequence(
-    'build:clean',
-    [
-      'build:scripts',
-      'build:styles',
-      'build:assets',
-      'build:views',
-      'build:jspm'
-    ],
-    done
-  );
-});

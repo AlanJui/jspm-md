@@ -1,55 +1,28 @@
 var gulp = require('gulp');
+var del = require('del');
 var tsc = require('gulp-tsc');
-var gulp_jspm = require('gulp-jspm');
+var runSequence = require('run-sequence');
+var Builder = require('systemjs-builder');
 
 //////////////////////////////////////////////////////
-// Client
+// Build
 //////////////////////////////////////////////////////
 
-gulp.task('build:client-withSourceMap', function() {
-  return gulp.src('src/client/scripts/**/*.ts')
-    .pipe(tsc({
-      module: 'system',
-      target: 'es5',
-      sourceMap: true,
-      noImplicitAny: false,
-      emitError: false,
-      removeComments: true
-    }))
-    .pipe(gulp.dest('_build'));
+// Build process
+gulp.task('build:scripts', function (done) {
+
+  runSequence(
+    'build:serverScripts',
+    'build:clientScripts',
+    done
+  );
+
 });
 
-gulp.task('build:client', function() {
-  return gulp.src('src/client/scripts/**/*.ts')
-    .pipe(gulp.dest('_build/client/scripts'));
-});
+gulp.task('build:serverScripts', function() {
 
-gulp.task('dist:client', function() {
-  return gulp.src('_build/client/scripts/**/*.ts')
-    .pipe(tsc({
-      module: 'system',
-      target: 'es5',
-      noImplicitAny: false,
-      removeComments: true
-    }))
-    .pipe(gulp.dest('_build/client/scripts'));
-});
+  del('_build/server');
 
-// Bundle JS Files to a Single File
-
-gulp.task('dist:bundle', ['dist:client'], function () {
-  return gulp.src('src/client/scripts/boot')
-    .pipe(gulp_jspm({
-      selfExecutingBundle: true
-    }))
-    .pipe(gulp.dest('_dist/client'));
-});
-
-//////////////////////////////////////////////////////
-// Server
-//////////////////////////////////////////////////////
-
-gulp.task('build:server', function() {
   return gulp.src('src/server/**/*.ts')
     .pipe(tsc({
       module: 'commonjs',
@@ -61,9 +34,71 @@ gulp.task('build:server', function() {
       removeComments: true
     }))
     .pipe(gulp.dest('_build/server'));
+
 });
 
-gulp.task('dist:server', function() {
+gulp.task('build:clientScripts', function (done) {
+
+  runSequence(
+    'clean:buildClientScripts',
+    'build:copyTS',
+    'build:tscClient',
+    done
+  );
+
+});
+
+// clean out all files and folders from build folder
+gulp.task('clean:buildClientScripts', function (done) {
+
+  var list = [
+    '_build/client/scripts/**/*.js'
+  ];
+
+  del(list)
+    .then(function () { done(); });
+
+});
+
+// copy .ts files to _build/client.scripts/
+gulp.task('build:copyTS', function() {
+  return gulp.src('src/client/scripts/**/*.ts')
+    .pipe(gulp.dest('_build/client/scripts'));
+});
+
+// transpile .ts file to .js file
+gulp.task('build:tscClient', function() {
+
+  return gulp.src('src/client/scripts/**/*.ts')
+    .pipe(tsc({
+      module: 'system',
+      target: 'es5',
+      sourceMap: true,
+      noImplicitAny: false,
+      removeComments: true
+    }))
+    .pipe(gulp.dest('_build/client/scripts'));
+
+});
+
+//////////////////////////////////////////////////////
+// Dist
+//////////////////////////////////////////////////////
+
+// Dist process
+gulp.task('dist:scripts', function (done) {
+
+  runSequence(
+    'dist:serverScripts',
+    'dist:clientScripts',
+    done
+  );
+
+});
+
+// Server scripts
+gulp.task('dist:serverScripts', function() {
+
   return gulp.src('src/server/**/*.ts')
     .pipe(tsc({
       module: 'commonjs',
@@ -72,6 +107,38 @@ gulp.task('dist:server', function() {
       removeComments: true
     }))
     .pipe(gulp.dest('_dist/server'));
+
 });
 
-gulp.task('build:scripts', ['build:server', 'build:client']);
+gulp.task('dist:clientScripts', function (done) {
+
+  runSequence(
+    'build:clientScripts',
+    'dist:bundle',
+    done
+  );
+
+});
+
+// Bundle .js files to a Single Self-Executing (SFX) Bundles File
+gulp.task('dist:bundle', function (done) {
+
+  var builder = new Builder('_build/client', 'src/client/config.js');
+
+  builder
+    .buildStatic(
+      'boot.js',
+      '_dist/client/scripts/bundle.js'
+    )
+    .then(function () {
+      console.log('Dist complete!!');
+      done();
+    })
+    .catch(function (err) {
+      console.log('Dist error:');
+      console.log(err);
+      done();
+    });
+
+});
+
