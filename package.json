@@ -15,9 +15,10 @@
     "serve:build": "PORT=5000 node _build/server/server.js",
     "serve:dist": "PORT=3000 node _dist/server/server.js",
     "bundle": "jspm bundle-sfx boot _dist/client/scripts/bundle.js",
-    "test": "npm run unit-tests && npm run e2e-tests",
-    "unit-tests": "karma start",
-    "e2e-tests": "protractor protractor.conf.js"
+    "test": "npm run unit-test && npm run e2e-test",
+    "api-test": "gulp serve:test && mocha -w --recursive test/API",
+    "unit-test": "karma start",
+    "e2e-test": "protractor protractor.conf.js"
   },
   "keywords": [
     "JSPM",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "browser-sync": "^2.11.1",
     "bs-html-injector": "^3.0.1",
+    "chai": "^3.5.0",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-gh-pages": "^0.5.4",
@@ -50,9 +52,11 @@
     "karma-spec-reporter": "0.0.24",
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-clean-css": "^1.5.1",
+    "mocha": "^2.4.5",
     "phantomjs-prebuilt": "^2.1.4",
     "protractor": "^3.2.2",
     "run-sequence": "^1.1.5",
+    "superagent": "^1.8.3",
     "wrench": "^1.5.8"
   },
   "jspm": {

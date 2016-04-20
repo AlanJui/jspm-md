@@ -34,6 +34,10 @@ gulp.task('serve', [ 'build' ], function () {
   watch();
 });
 
+//////////////////////////////////////////////////////
+// Serve Build
+//////////////////////////////////////////////////////
+
 gulp.task('serve:build', [ 'build', 'start:client' ], function () {
   watch();
   serverReload();
@@ -69,6 +73,10 @@ gulp.task('start:server', [ 'build' ], function (done) {
 
 });
 
+//////////////////////////////////////////////////////
+// Serve DIST
+//////////////////////////////////////////////////////
+
 gulp.task('serve:dist', ['dist'], function () {
 
   nodeMon({
@@ -77,6 +85,29 @@ gulp.task('serve:dist', ['dist'], function () {
     env: {
       PORT: 3000
     }
+  });
+
+});
+
+//////////////////////////////////////////////////////
+// Serve TEST
+//////////////////////////////////////////////////////
+
+gulp.task('serve:test', ['build'], function () {
+
+  nodeMon({
+    script: '_build/server/server.js',
+    ext: 'js',
+    env: {
+      NODE_ENV: 'test',
+      PORT: 8888
+    },
+    ignore: [
+      './node_modules/**'
+    ]
+  })
+  .on('restart', function () {
+    console.log('Restarting nodemon...');
   });
 
 });
