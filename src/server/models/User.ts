@@ -5,7 +5,7 @@ interface IUser extends IPerson {
   email?: string;
 }
 
-class User extends IUser {
+class User extends Person implements IUser {
   avatar: string;
   email: string;
 

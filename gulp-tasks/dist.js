@@ -26,7 +26,7 @@ gulp.task('dist:assets', function () {
 });
 
 //////////////////////////////////////////////////////
-// Inject JS/CSS files into index.html
+// Inject JS files into index.html
 //////////////////////////////////////////////////////
 
 gulp.task('dist:inject', function () {
@@ -52,7 +52,6 @@ gulp.task('dist', function (done) {
     'dist:server',
     'dist:bundle',
     'dist:inject',
-    'dist:start',
     done
   );
 });

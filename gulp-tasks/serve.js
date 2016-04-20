@@ -8,21 +8,16 @@ var reload = browserSync.reload;
 
 var watch = function () {
   gulp.watch('src/client/scripts/**/*.ts', ['build:client']);
-  gulp.watch('_build/client/scripts/**/*.ts').on('change', reload);
 
   gulp.watch('src/server/**/*.ts', ['build:server']);
-  gulp.watch('_build/server/**/*.js').on('change', reload);
 
   gulp.watch('src/client/scripts/**/*.less', ['build:styles']);
   gulp.watch('src/client/app.less', ['build:styles']);
-  gulp.watch('_build/client/app.css').on('change', reload);
 
   gulp.watch('src/client/scripts/**/*.tpl.html', ['build:views']);
-  gulp.watch('_build/client/scripts/**/*.tpl.html').on('change', reload);
 
   gulp.watch('src/client/index.html', ['build:homePage']);
-  gulp.watch('src/client/config.js', ['build:main']);
-  gulp.watch('_build/client/index.html').on('change', reload);
+  gulp.watch('src/client/config.js', ['build:jspm']);
 };
 
 var serverReload = function () {

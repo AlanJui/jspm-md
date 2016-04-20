@@ -38,7 +38,7 @@ gulp.task('dist:client', function() {
 // Bundle JS Files to a Single File
 
 gulp.task('dist:bundle', ['dist:client'], function () {
-  return gulp.src('boot.js')
+  return gulp.src('src/client/scripts/boot')
     .pipe(gulp_jspm({
       selfExecutingBundle: true
     }))
