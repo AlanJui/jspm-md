@@ -1,13 +1,13 @@
-///<reference path="../../typings/main.d.ts"/>
+///<reference path="./_server.d.ts"/>
 
 'use strict';
 
 import * as path from 'path';
 import user from './api/user';
 
-export default function setupRouter(app, db) {
+export default function setupRouter(app, dbConnect) {
   // Insert routes below
-  app.use('/api/users', user(db));
+  app.use('/api/users', user(dbConnect));
 
   // app.use('/auth', require('./auth').default);
 

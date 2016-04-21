@@ -1,20 +1,20 @@
-///<reference path="../../typings/main.d.ts"/>
+///<reference path="./_server.d.ts"/>
 
 'use strict';
 
 import * as express from 'express';
 
-import DbUtil from './db';
+import DbConnect from './db';
 import seed from './config/seed';
 import setupExpress from './config/express';
 import setupRouter from './routes';
 
 // Connect to MongoDB Server
-let dbUtil = new DbUtil();
-dbUtil.connectDbServer(seed);
+let dbConnect = new DbConnect();
+dbConnect.connectServer();
 
 // Populate databases with sample data
-// seed(db);
+// seed(dbConnect);
 
 // Setup server
 let app = express();
@@ -26,7 +26,7 @@ setupExpress(app);
 
 // Routes
 // require('./routes').default(app, db);
-setupRouter(app, dbUtil);
+setupRouter(app, dbConnect);
 
 // Start server
 app.listen(port, () => {

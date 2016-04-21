@@ -1,7 +1,7 @@
 'use strict';
 
-let Seed = function (db) {
-  let users = db.getCollection('users');
+let Seed = function (dbConnect) {
+  let users = dbConnect.getCollection('users');
   users.removeMany();
 
   users.insertMany(userData)

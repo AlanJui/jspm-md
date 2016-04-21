@@ -16,7 +16,7 @@
     "serve:dist": "PORT=3000 node _dist/server/server.js",
     "bundle": "jspm bundle-sfx boot _dist/client/scripts/bundle.js",
     "test": "npm run unit-test && npm run e2e-test",
-    "api-test": "gulp serve:test && mocha -w --recursive test/API",
+    "api-test": "mocha -w --recursive test/API",
     "unit-test": "karma start",
     "e2e-test": "protractor protractor.conf.js"
   },
@@ -87,6 +87,7 @@
     "body-parser": "^1.15.0",
     "errorhandler": "^1.4.3",
     "express": "^4.13.4",
+    "lodash": "^4.11.1",
     "method-override": "^2.3.5",
     "mongodb": "^2.1.16",
     "systemjs-builder": "^0.15.15"

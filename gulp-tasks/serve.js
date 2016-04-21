@@ -57,7 +57,7 @@ gulp.task('start:server', [ 'build' ], function (done) {
 
   return nodeMon({
     script: '_build/server/server.js',
-    watch: ['_build/server/**/*.js']
+    watch: '_build/server/**/*.js'
   })
     .on('start', function () {
       if (!running) {
@@ -79,7 +79,7 @@ gulp.task('start:server', [ 'build' ], function (done) {
 
 gulp.task('serve:dist', ['dist'], function () {
 
-  nodeMon({
+  return nodeMon({
     script: '_dist/server/server.js',
     ext: 'js',
     env: {
@@ -93,9 +93,9 @@ gulp.task('serve:dist', ['dist'], function () {
 // Serve TEST
 //////////////////////////////////////////////////////
 
-gulp.task('serve:test', ['build'], function () {
+gulp.task('serve:test', function () {
 
-  nodeMon({
+  return nodeMon({
     script: '_build/server/server.js',
     ext: 'js',
     env: {
