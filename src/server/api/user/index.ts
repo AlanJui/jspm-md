@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 export default function(dbConnect) {
 
   let router = express.Router();
+  let ObjectID = mongodb.ObjectID;
   let COLLECTION_NAME: string = 'users';
 
   router.get('/nameList', getNameList);
@@ -26,7 +27,33 @@ export default function(dbConnect) {
 // ==========================================================
 
   function isEmpty(value) {
-    return (value == null || value.length === 0)
+
+    return (value == null || value.length === 0);
+
+  }
+
+  function removeDocID(doc) {
+    let obj = doc;
+    delete obj['_id'];
+    return obj;
+  }
+
+
+  function checkEmptyFields(reqBody) {
+
+    let fields = ['firstName', 'lastName', 'email'];
+    let emptyFields = [];
+
+    for (let i=0; i < fields.length; ++i) {
+      let key = fields[i];
+      let value = reqBody[key];
+      if (isEmpty(value)) {
+        emptyFields.push(key);
+      }
+    }
+
+    return emptyFields;
+
   }
 
   function list(req, res) {
@@ -43,17 +70,7 @@ export default function(dbConnect) {
 
   function create(req, res) {
 
-    let fields = ['firstName', 'lastName', 'email'];
-    let emptyFields = [];
-
-    for (let i=0; i < fields.length; ++i) {
-      let key = fields[i];
-      let value = req.body[key];
-      if (isEmpty(value)) {
-        emptyFields.push(key);
-      }
-    }
-
+    let emptyFields = checkEmptyFields(req.body);
     if (emptyFields.length !== 0) {
       return res.status(422).json(emptyFields);
     }
@@ -69,19 +86,58 @@ export default function(dbConnect) {
   }
   
   function getById(req, res, next) {
+
     let collection = dbConnect.getCollection(COLLECTION_NAME);
-    next();
+    let objectID = new ObjectID(req.params.id);
+    collection.findOne({'_id': objectID}, (err, doc) => {
+      if (err) {
+        res.status(500).send(err);
+      } else if (doc) {
+        res.doc = doc;
+        next();
+      } else {
+        res.status(404).send('User not found!');
+      }
+    });
+
   }
 
   function read(req, res) {
-
+    res.json(res.doc);
   }
 
   function update(req, res) {
 
+    let ID = res.doc._id;
+
+    let updateDoc = removeDocID(req.body);
+    let emptyFields = checkEmptyFields(updateDoc);
+    if (emptyFields.length !== 0) {
+      return res.status(422).json(emptyFields);
+    }
+
+    let collection = dbConnect.getCollection(COLLECTION_NAME);
+    collection.updateOne({'_id': ID}, {$set: updateDoc}, (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+
+      res.status(200).send();
+    });
+
   }
 
   function del(req, res) {
+
+    let ID = res.doc._id;
+    let collection = dbConnect.getCollection(COLLECTION_NAME);
+    collection.remove({'_id': ID}, (err, result) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+
+      res.status(200).send();
+    });
 
   }
 

@@ -9,6 +9,7 @@
     "express": "registry:dt/express#4.0.0+20160317120654",
     "express-serve-static-core": "registry:dt/express-serve-static-core#0.0.0+20160322035842",
     "jquery": "registry:dt/jquery#1.10.0+20160316155526",
+    "lodash": "registry:dt/lodash#3.10.0+20160330154726",
     "method-override": "registry:dt/method-override#0.0.0+20160317120654",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "mongodb": "registry:dt/mongodb#2.1.0+20160328151449",
