@@ -1,167 +1,124 @@
 ///<reference path="./_server.d.ts"/>
 
-import * as mongodb from 'mongodb';
+import * as mongo from 'mongodb';
 
-interface IDbConnect {
-  connectServer(): void;
-  getDB(): any;
-  getCollection(name): any;
+let url = null;
+let MongoClient = mongo.MongoClient;
+let ObjectID = mongo.ObjectID;
+
+export function setURL(strURL: string) {
+  url = strURL;
 }
 
-class DbConnect implements IDbConnect {
+export function connect(callback) {
 
-  private URI = 'mongodb://localhost:27017/mydb';
-  private db = null;
+  MongoClient.connect(url, (err, db) => {
+    if (err) {
+      callback(err, null)
+    }
+    callback(null, db);
+  });
 
-  constructor() {}
+}
 
-  connectServer(): void {
+export function getObjID(id: string) {
 
-    let self = this;
-    let mongodbClient = mongodb.MongoClient;
+  let objID = new ObjectID(id);
+  return objID;
 
-    mongodbClient.connect(self.URI, (err, db) => {
+}
+
+export function list(name, callback) {
+
+  connect( (err, db) => {
+    if (err) {
+      callback(err, null)
+    }
+
+    db.collection(name)
+    .find({}).toArray((err, docs) => {
       if (err) {
-        console.error("Error connecting to MongoDB server - check mongod has been started");
-        process.exit(1);
+        callback(err, null);
       }
-      self.db = db;
-      console.log('MongoDB Server connected');
+      callback(null, docs);
+    });
+  });
+
+}
+
+export function insertOneDoc(name, doc, callback) {
+
+  connect( (err, db) => {
+    if (err) {
+      callback(err, null)
+    }
+
+    db.collection(name)
+      .insertOne(doc, (err, result) => {
+        if (err) {
+          callback(err, null);
+        }
+        callback(null, result.ops[0]);
+      });
+  });
+
+}
+
+export function findDocById(name, ID: string, callback) {
+
+  connect((err, db) => {
+    if (err) {
+      callback(err, null)
+    }
+
+    let objectID = getObjID(ID);
+
+    db.collection(name).findOne({'_id': objectID}, (err, doc) => {
+      if (err) {
+        callback(err, null);
+      }
+      callback(null, doc)
     });
 
-  }
-
-  getDB(): any {
-    return this.db;
-  }
-
-  getCollection(name): any {
-    return this.db.collection(name);
-  }
+  });
 
 }
 
-export {IDbConnect, DbConnect};
-export default DbConnect;
+export function updateDocById(name, ID, updateDoc, callback) {
 
-// let client: mongodb.MongoClient = mongodb.MongoClient;
-//
-// function DbConnect() {
-//   this.db = null;
-// };
-//
-// DbConnect.prototype.connectServer = function (callback) {
-//   let self = this;
-//
-//   client.connect('mongodb://localhost:27017/mydb',
-//     (err: mongodb.MongoError, db: mongodb.Db) => {
-//
-//     if (err) {
-//       console.error("Error connecting to MongoDB server - check mongod has been started");
-//       process.exit(1);
-//     }
-//     this.db = db;
-//     console.log('MongoDB Server connected');
-//     callback(self);
-//
-//   });
-// }
-//
-// DbConnect.prototype.getCollection = function (name) {
-//   return this.db.collection(name);
-// }
-//
-// export default DbConnect;
+  connect( (err, db) => {
+    if (err) {
+      callback(err, null)
+    }
 
-// import * as mongodb from 'mongodb';
-//
-// let client: mongodb.MongoClient = mongodb.MongoClient;
-//
-// function DbConnect() {
-//   this.db = null;
-// };
-//
-// DbConnect.prototype.connectServer = function (callback) {
-//   let self = this;
-//
-//   client.connect('mongodb://localhost:27017/mydb',
-//     (err: mongodb.MongoError, db: mongodb.Db) => {
-//
-//       if (err) {
-//         console.error("Error connecting to MongoDB server - check mongod has been started");
-//         process.exit(1);
-//       }
-//       this.db = db;
-//       console.log('MongoDB Server connected');
-//       callback(self);
-//
-//     });
-// }
-//
-// DbConnect.prototype.getCollection = function (name) {
-//   return this.db.collection(name);
-// }
-//
-// export default DbConnect;
-//
-// class DbUtil implements IDbUtil {
-//
-//   connectDbServer(): void {
-//
-//     client.connect('mongodb://localhost:27017/mydb', (err, db) => {
-//       if (err) {
-//         console.error("Error connecting to MongoDB server - check mongod has been started");
-//         process.exit(1);
-//       }
-//       _db = db;
-//       console.log('MongoDB Server connected');
-//     });
-//
-//   }
-//
-//   getCollection(name: string): mongodb.Collection {
-//     return _db.collection(name);
-//   }
-//
-// }
-//
-// export default DbUtil;
+    db.collection(name)
+      .updateOne({'_id': ID}, {$set: updateDoc}, (err, result) => {
+        if (err) {
+          callback(err, null);
+        }
+        callback(null, 'OK');
+      });
+  });
 
-// ====================================================================
+}
 
-// import * as mongodb from 'mongodb';
-//
-// interface IDbUtil {
-//   connectDbServer(): void;
-//   getCollection(name: string): mongodb.Collection;
-// }
-//
-// class DbUtil implements IDbUtil {
-//   client = mongodb.MongoClient;
-//   _db: mongodb.Db = null;
-//
-//   connectDbServer(): void {
-//
-//     let self = this;
-//
-//     this.client.connect('mongodb://localhost:27017/mydb', (err, db) => {
-//       if (err) {
-//         console.error("Error connecting to MongoDB server - check mongod has been started");
-//         process.exit(1);
-//       }
-//       self._db = db;
-//       console.log('MongoDB Server connected');
-//     });
-//
-//   }
-//
-//   getCollection(name: string): mongodb.Collection {
-//     return this._db.collection(name);
-//   }
-//
-// }
-//
-// export default DbUtil;
+export function removeDocById(name, ID, callback) {
+
+  connect((err, db) => {
+    if (err) {
+      callback(err, null)
+    }
+
+    db.collection(name)
+      .remove({'_id': ID}, (err, result) => {
+        if (err) {
+          callback(err, null);
+        }
+        callback(null, 'OK');
+      });
+  });
+
+}
 
 // ====================================================================
 
@@ -172,7 +129,7 @@ export default DbConnect;
 // import * as mongodb from 'mongodb';
 //
 // class DbUtil {
-//   static client = mongodb.MongoClient;
+//   functionclient = mongodb.MongoClient;
 //   static _db: mongodb.Db;
 //
 //   static connect(): void {

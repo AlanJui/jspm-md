@@ -18,6 +18,7 @@
   ],
 
   "files": [
+    "./typings/main.d.ts",
     "server.ts",
     "db.ts",
     "routes.ts",

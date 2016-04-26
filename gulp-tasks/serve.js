@@ -89,26 +89,3 @@ gulp.task('serve:dist', ['dist'], function () {
 
 });
 
-//////////////////////////////////////////////////////
-// Serve TEST
-//////////////////////////////////////////////////////
-
-gulp.task('serve:test', function () {
-
-  return nodeMon({
-    script: '_build/server/server.js',
-    ext: 'js',
-    env: {
-      NODE_ENV: 'test',
-      PORT: 8888
-    },
-    ignore: [
-      './node_modules/**'
-    ]
-  })
-  .on('restart', function () {
-    console.log('Restarting nodemon...');
-  });
-
-});
-

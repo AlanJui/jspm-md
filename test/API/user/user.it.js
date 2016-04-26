@@ -270,8 +270,8 @@ describe(`API for`, function() {
           expect(e).to.equal(null);
           (res.header['content-type']).should.have.string('application/json');
           (res.status).should.eql(200);
-          (res.body.length).should.equal(0);
-
+          (res.body.length).should.above(6);
+          console.log(`docs = ${res.body.length}`)
           done()
         });
 

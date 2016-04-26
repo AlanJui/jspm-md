@@ -129,6 +129,37 @@ $ npm run setup
 
 
 
+# 測試作業
+
+## 單元測試（UT）作業
+
+ 1. 啟動測試伺服器
+ 
+    ```
+     $ gulp serve:test
+    ```
+    
+ 2. 執行測試   
+ 
+   ```
+    $ gulp ut
+   ```
+
+## 整合測試（IT）作業
+
+ 1. 啟動測試伺服器
+ 
+    ```
+     $ gulp serve:test
+    ```
+    
+ 2. 執行測試   
+ 
+   ```
+    $ gulp it
+   ```
+
+
 # 佈署作業
 
 將已完成包裝的「軟體產品」，佈署至 GitHub 。
@@ -223,4 +254,24 @@ $ npm run setup
   /* endinject */
 
 }
+```
+
+## 終止佔用某 Port 的 Process
+
+### 查詢佔用某 Port 的 Process 其 PID
+
+```
+ $ netstat -anp tcp | grep 3000
+```
+
+Mac OSX El Capitan
+
+```
+ $ lsof -i [tcp]:3000
+```
+
+## 透過 PID 終止 Process
+
+```
+ $ kill -9 <PID>
 ```

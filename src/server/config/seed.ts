@@ -1,20 +1,38 @@
+///<reference path="../_server.d.ts"/>
+
 'use strict';
 
-let Seed = function (dbConnect) {
-  let users = dbConnect.getCollection('users');
-  users.removeMany();
+import * as mongo from 'mongodb';
 
-  users.insertMany(userData)
-    .then((err, result) => {
-      if (err.insertedCount !== userData.length) {
-        return console.error(err);
-      }
+let MongoClient = mongo.MongoClient;
 
-      console.log(`${err.insertedCount} users for test has been created!`);
+export default function Seed(url) {
+
+  MongoClient.connect(url, (err, db) => {
+    if (err) {
+      console.error(err);
+    }
+
+    insertDocuments(db, () => {
+      db.close();
     });
+  });
+
 }
 
-export default Seed;
+function insertDocuments(db, callback) {
+
+  db.collection('users').insertMany(userData, (err, result) => {
+    if (err) {
+      return console.error(err);
+    }
+
+    console.log(`${result.ops.length} users for test has been created!`);
+
+    callback();
+  });
+
+}
 
 let userData = [
   {

@@ -3,11 +3,13 @@
 'use strict';
 
 import * as path from 'path';
-import user from './api/user';
 
-export default function setupRouter(app, dbConnect) {
+import users from './api/user';
+
+export default function (app) {
+
   // Insert routes below
-  app.use('/api/users', user(dbConnect));
+  app.use('/api/users', users());
 
   // app.use('/auth', require('./auth').default);
 
@@ -19,5 +21,7 @@ export default function setupRouter(app, dbConnect) {
     .get((req, res) => {
       res.sendFile(path.resolve(app.get('clientPath') + '/index.html'));
     });
+
 }
+
 
