@@ -10,7 +10,7 @@ class MainController {
 
   static $inject = [
     'ContactService',
-    'mainCtrlService',
+    'getAllContacts',
     '$mdSidenav',
     '$mdToast',
     '$mdDialog',
@@ -20,7 +20,7 @@ class MainController {
   
   constructor(
     public ContactService: IContactService,
-    public mainCtrlService,
+    public getAllContacts,
     public $mdSidenav: angular.material.ISidenavService,
     public $mdToast: angular.material.IToastService,
     public $mdDialog: angular.material.IDialogService,
@@ -29,14 +29,7 @@ class MainController {
   ) {
     let self = this;
     
-    // this.ContactService.getAll()
-    //   .then((contacts: Contact[]) => {
-    //     console.log(contacts);
-    //     self.contacts = contacts;
-    //     self.selectedContact = self.contacts[0];
-    //     self.ContactService.selectedContact = self.selectedContact;
-    //   });
-    self.contacts = mainCtrlService.data;
+    self.contacts = getAllContacts;
     self.selectedContact = self.contacts[0];
     self.ContactService.selectedContact = self.selectedContact;
   }
@@ -58,7 +51,11 @@ class MainController {
   }
   
   makeContact($event): void {
-    
+
+    // this.$mdBottomSheet.show({
+    //   template: '<md-bottom-sheet>Hello!</md-bottom-sheet>'
+    // });
+
     this.$mdBottomSheet.show({
       parent: angular.element(document.getElementById('content')),
       templateUrl: 'scripts/main/contactPanel.tpl.html',
