@@ -57,7 +57,11 @@ gulp.task('start:server', [ 'build' ], function (done) {
 
   return nodeMon({
     script: '_build/server/server.js',
-    watch: '_build/server/**/*.js'
+    watch: '_build/server/**/*.js',
+    env: {
+      // PORT: 20080,
+      NODE_ENV: 'development'
+    }
   })
     .on('start', function () {
       if (!running) {
@@ -83,7 +87,9 @@ gulp.task('serve:dist', ['dist'], function () {
     script: '_dist/server/server.js',
     ext: 'js',
     env: {
-      PORT: 3000
+      PORT: 3000,
+      NODE_ENV: 'development'
+      // NODE_ENV: 'production'
     }
   });
 

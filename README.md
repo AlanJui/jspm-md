@@ -74,7 +74,7 @@ $ npm run setup
 無需針對程式碼除錯（Debug）時，以如下指令啟動 Web Server 。
 
 ```
- $ gulp start
+ $ gulp serve:build
 ```
 
 ### 2.1.b 啟動偵錯用 Web Server
@@ -123,7 +123,7 @@ $ npm run setup
 # 檢視產品
 
 ```
- $ gulp build:serve
+ $ gulp serve:dist
 ```
 上述指令執行完畢，可自瀏覽器，網址: http://localhost:3000 處，進行軟體產品操作使用。
 
@@ -196,16 +196,19 @@ $ npm run setup
 ## 使用 jspm 安裝軟體所需模組
 
 ```
- $ jspm install angular-material angular-ui-router text json 
+ $ jspm install angular-material text json 
  $ jspm install typescript core-js
- $ jspm install angular angular-animate angular-aria angular-material angular-messages angular-resource angular-ui-router 
+ $ jspm install angular angular-animate angular-aria angular-messages angular-resource angular-ui-router 
  $ jspm install npm:angular-material-icons 
+ 
+ $ jspm install typescript --dev
 ```
 
 ## 使用 typings 安裝 DTS 檔案
 
 ```
  $ typings install angular-material --ambient --save
+ $ typings install angular --ambient --save
  $ typings install angular-ui-router --ambient --save
 ```
 
