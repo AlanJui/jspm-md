@@ -21,7 +21,7 @@ const URL_ICON_SHARE = './assets/svg/share.svg';
 
 export function bootstrap() {
 
-let app = angular
+angular
   .element(document)
   .ready(() => {
     let appName = 'app';
