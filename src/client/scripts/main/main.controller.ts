@@ -11,6 +11,7 @@ class MainController {
   static $inject = [
     'ContactService',
     'getAllContacts',
+    '$state',
     '$mdSidenav',
     '$mdToast',
     '$mdDialog',
@@ -21,6 +22,7 @@ class MainController {
   constructor(
     public ContactService: IContactService,
     public getAllContacts,
+    public $state,
     public $mdSidenav: angular.material.ISidenavService,
     public $mdToast: angular.material.IToastService,
     public $mdDialog: angular.material.IDialogService,
@@ -32,6 +34,8 @@ class MainController {
     self.contacts = getAllContacts;
     self.selectedContact = self.contacts[0];
     self.ContactService.selectedContact = self.selectedContact;
+
+    $state.transitionTo('main.content');
   }
 
   toggleSideNav(): void {
@@ -52,12 +56,8 @@ class MainController {
   
   makeContact($event): void {
 
-    // this.$mdBottomSheet.show({
-    //   template: '<md-bottom-sheet>Hello!</md-bottom-sheet>'
-    // });
-
     this.$mdBottomSheet.show({
-      parent: angular.element(document.getElementById('content')),
+      // parent: angular.element(document.getElementById('content')),
       templateUrl: 'scripts/main/contactPanel.tpl.html',
       controller: ContactPanelController,
       controllerAs: 'vm',
